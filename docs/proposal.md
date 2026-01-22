@@ -24,3 +24,8 @@ One basic metric we will use to quantitatively evaluate our agent is through ach
 Qualitative...
 
 ## AI Tool Usage
+ChatGPT
+
+## Meeting Date
+1. January 22nd, 2026 @ 1:00PM PST
+[Zoom Link](https://www.google.com/url?q=https://uci.zoom.us/j/98426114741&sa=D&source=calendar&ust=1769212997341317&usg=AOvVaw3CUJ3h4T7r5JGExkt2JB5U)
