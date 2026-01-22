@@ -6,11 +6,11 @@ title:  Team
 # {{ page.title }}
 
 
-## USER 1
-***UCI Net ID***: ucinetid1
+## Brian Byunghyun Kim
+***UCI Net ID***: bkim3164
 
-## USER 2
-***UCI Net ID***: ucinetid2
+## Zachary Ian Lai
+***UCI Net ID***: zachlai23
 
-## USER 3
-***UCI Net ID***: ucinetid3
+## Zongze Li
+***UCI Net ID***: zongzel3
