@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 /* ============================================
    Modern Website Styling
    ============================================ */
@@ -48,11 +49,18 @@ body {
 .navbar-brand {
   font-size: 1.5rem;
   letter-spacing: -0.5px;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: #ffffff !important;
 }
 
 .nav-link {
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 .nav-link:hover {
@@ -104,6 +112,29 @@ body {
   margin: 0.5rem 0 0 0;
   opacity: 0.95;
   font-weight: 300;
+}
+
+/* Ensure header text stays light even though global heading styles set dark colors */
+.page-header-section .page-title,
+.page-header-section .page-subtitle,
+.page-header-section h1,
+.page-header-section h2,
+.page-header-section h3,
+.page-header-section h4,
+.page-header-section h5,
+.page-header-section h6 {
+  color: #ffffff;
+}
+
+.page-header-section p,
+.page-header-section li,
+.page-header-section a {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.page-header-section a:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 /* Main Content */
@@ -220,6 +251,11 @@ pre code {
   border: none;
 }
 
+.card-header,
+.card-header * {
+  color: #ffffff;
+}
+
 .card-body {
   padding: 1.5rem;
 }
@@ -256,17 +292,34 @@ pre code {
 /* Footer */
 .footer {
   margin-top: auto;
-  color: #b0b0b0;
+  background-color: var(--dark-bg);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer h1,
+.footer h2,
+.footer h3,
+.footer h4,
+.footer h5,
+.footer h6 {
+  color: #ffffff;
+}
+
+.footer p,
+.footer li {
+  color: inherit;
 }
 
 .footer a {
-  color: #64b5f6;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .footer a:hover {
-  color: #42a5f5;
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 /* Blockquotes */
