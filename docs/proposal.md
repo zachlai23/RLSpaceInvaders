@@ -1,31 +1,52 @@
 ---
 layout: default
-title:  Home
+title:  Proposal
 ---
 
 ## Summary
-Space Invaders is a fixed shooter game where the user controls a starfighter, attacking and dodging enemies from above.
 
-In this project, we will use and evaluate reinforcement learning agents capable of playing Space Invaders autonomously.  By using reinforcement learning algorithms, the agent will learn to move, shoot, and defend itself from the enemy in the game environment.
+Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. In this project, we will train and evaluate reinforcement learning agents capable of playing Space Invaders autonomously.
+
+By leveraging reinforcement learning algorithms, our agent will learn to move, shoot, and defend itself from incoming enemy fire within the game environment.
 
 ## Project Goals
-Minimum goal: Train an agent that can successfully interact with the Space Invaders environemnt, correctly progress game state inputs, and perform valid actions without crashing or behaving randomly.
 
-Realistic goal: Develop an agent that demonstrates competent gameplay by consistently avoiding enemy fire and have the ability to efficiently destroy enemies to clear up to intermediate levels.
+### 🎯 Minimum Goal
+Train an agent that can successfully interact with the Space Invaders environment, correctly process game state inputs, and perform valid actions without crashing or behaving randomly.
 
-Moonshot goal: Create an agent that exhibits expert gameplay and has adaptive strategies against different enemy patterns, and is able to clear all of the difficult levels. 
+### 🚀 Realistic Goal  
+Develop an agent that demonstrates competent gameplay by consistently avoiding enemy fire and efficiently destroying enemies to clear up to intermediate levels.
+
+### 🌙 Moonshot Goal
+Create an agent that exhibits expert-level gameplay with adaptive strategies against different enemy patterns, capable of clearing all difficult levels.
 
 ## AI/ML Algorithms
-In this project, we will start with Deep Q-Networks (DQN), a model-free reinforcement learning, as a baseline algorithm to learn a policy that maps game state observations to discrete actions such as movement and shooting. If time permits, we will explore extensions of DQN, such as Double DQN or experience replay. This will help to improve training stability and performance so that we can compare our agent against simple rule-based baseline agents.
+
+We will start with **Deep Q-Networks (DQN)**, a model-free reinforcement learning algorithm, as our baseline. DQN learns a policy that maps game state observations to discrete actions (movement and shooting).
+
+If time permits, we will explore extensions such as:
+- Double DQN
+- Experience replay mechanisms
+- Other improvements to enhance training stability and performance
+
+We will also compare our agent against simple rule-based baseline agents.
 
 ## Evaluation Plan
-One basic metric we will use to quantitatively evaluate our agent is through achievements in the game like levels passed, time to finish a level, and damage taken.  We can compare these statistics to our group members scores playing the game, or scores found online.  As our baseline model, we will use a simple rule based agent and record it's scores.  We estimate the agent we implement will be significantly more accurate and understand the game logic better than the baseline.
 
-Qualitative...
+We will quantitatively evaluate our agent using game achievements including:
+- Levels passed
+- Time to complete levels
+- Damage taken
+- Score comparison with human players and online benchmarks
 
-## AI Tool Usage
-ChatGPT
+Our baseline model will be a simple rule-based agent. We expect our RL agent to significantly outperform the baseline in accuracy and game logic understanding.
 
-## Meeting Date
-1. January 22nd, 2026 @ 1:00PM PST
-[Zoom Link](https://www.google.com/url?q=https://uci.zoom.us/j/98426114741&sa=D&source=calendar&ust=1769212997341317&usg=AOvVaw3CUJ3h4T7r5JGExkt2JB5U)
+## Tools & Resources
+
+- **AI Assistance**: ChatGPT
+- **Platform**: Python with reinforcement learning frameworks
+
+## Team Meetings
+
+📅 **January 22nd, 2026 @ 1:00 PM PST**  
+[Zoom Meeting Link](https://www.google.com/url?q=https://uci.zoom.us/j/98426114741&sa=D&source=calendar&ust=1769212997341317&usg=AOvVaw3CUJ3h4T7r5JGExkt2JB5U)
