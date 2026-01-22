@@ -1,93 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>{{ site.title }}: {{ page.title }}</title>
 
-    <!-- Bootstrap -->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUarbnLj2rgIVN+TDeIAGagFSJ56Vkn/fXZQonZzCyxXmmOznTv" crossorigin="anonymous">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- MathJax -->
-    <script type="text/javascript" async
-	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ 'css/custom.css' | relative_url }}">
-  </head>
-  <body>
-
+</head>
+<body>
     {% assign current = page.url | downcase | split: '/' %}
     {% assign statusClass = 'disabled' %}
     {% assign proposalClass = 'disabled' %}
     {% assign finalClass = 'disabled' %}
     {% for page in site.html_pages %}
-      <!--h1>{{ page.url }}</h1-->
-      {% if page.url == '/proposal.html' %}
-          {% assign proposalClass = '' %}
-      {% endif %}
-      {% if page.url == '/status.html' %}
-          {% assign statusClass = '' %}
-      {% endif %}
-      {% if page.url == '/final.html' %}
-          {% assign finalClass = '' %}
-      {% endif %}
+        {% if page.url == '/proposal.html' %}
+            {% assign proposalClass = '' %}
+        {% endif %}
+        {% if page.url == '/status.html' %}
+            {% assign statusClass = '' %}
+        {% endif %}
+        {% if page.url == '/final.html' %}
+            {% assign finalClass = '' %}
+        {% endif %}
     {% endfor %}
-    <!--h2>{% if current[1] == %} 5 {% endif %}</h2-->
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="navbar-brand" style="pointer-events:none;">{{ site.title }}</span>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">{{ site.title }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if current[1] == 'index.html' or current[1] == '' %}active{% endif %}" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item {% if proposalClass == 'disabled' %}d-none{% endif %}">
+                        <a class="nav-link {% if current[1] == 'proposal.html' %}active{% endif %}" href="proposal.html">Proposal</a>
+                    </li>
+                    <li class="nav-item {% if statusClass == 'disabled' %}d-none{% endif %}">
+                        <a class="nav-link {% if current[1] == 'status.html' %}active{% endif %}" href="status.html">Status</a>
+                    </li>
+                    <li class="nav-item {% if finalClass == 'disabled' %}d-none{% endif %}">
+                        <a class="nav-link {% if current[1] == 'final.html' %}active{% endif %}" href="final.html">Final</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if current[1] == 'team.html' %}active{% endif %}" href="team.html">Team</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="{% if current[1] == 'index.html' or current[1] == %} active {% endif %}"><a href="index.html">Home</a></li>
-            <li class="{{ proposalClass }}{% if current[1] == 'proposal.html' %} active {% endif %}"><a href="proposal.html">Proposal</a></li>
-            <li class="{{ statusClass }}{% if current[1] == 'status.html' %} active {% endif %}"><a href="status.html">Status</a></li>
-            <li class="{{ finalClass }}{% if current[1] == 'final.html' %} active {% endif %}"><a href="final.html">Final</a></li>
-            <li class="{% if current[1] == 'team.html' %} active {% endif %}"><a href="team.html">Team Details</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
     </nav>
 
-    <div class="container">
-      <div class="page-header">
-        <h2>
-        {{ site.title }}
-        <small>{{ site.subtitle }}</small>
-        </h2>
-      </div>
+    <!-- Page Header -->
+    <div class="page-header-section">
+        <div class="container">
+            <h1 class="page-title">{{ site.title }}</h1>
+            <p class="page-subtitle">{{ site.subtitle }}</p>
+        </div>
+    </div>
 
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container py-4">
+            {{ content }}
+        </div>
+    </main>
 
-        {{ content }}
-
-    </div><!-- /.container -->
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">Website created as part of the <a href="https://royf.org/crs/CS175/W25">CS 175 (W25): Project in Artificial Intelligence</a> course.</p>
-      </div>
+    <!-- Footer -->
+    <footer class="footer bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">Website created as part of the <a href="https://royf.org/crs/CS175/W25" class="text-light text-decoration-none fw-500">CS 175 (W25): Project in Artificial Intelligence</a> course.</p>
+        </div>
     </footer>
 
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWbSxccPQtF3EpF3fnJHog6LaEVF3MAjmtO9UvCXUU9ADDu7b" crossorigin="anonymous"></script>
 </body>
 </html>
 
