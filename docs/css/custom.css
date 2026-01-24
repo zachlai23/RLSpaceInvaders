@@ -309,7 +309,6 @@ pre code {
 .card {
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 1rem;
   box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
   overflow: hidden;
