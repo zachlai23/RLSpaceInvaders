@@ -39,26 +39,26 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">{{ site.title }}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand fw-bold" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 list-unstyled">
                     <li class="nav-item">
-                        <a class="nav-link {% if current[1] == 'index.html' or current[1] == '' %}active{% endif %}" href="index.html">Home</a>
+                        <a class="nav-link {% if page.url == '/' or page.url == '/index.html' %}active{% endif %}" {% if page.url == '/' or page.url == '/index.html' %}aria-current="page"{% endif %} href="{{ '/' | relative_url }}">Home</a>
                     </li>
                     <li class="nav-item {% if proposalClass == 'disabled' %}d-none{% endif %}">
-                        <a class="nav-link {% if current[1] == 'proposal.html' %}active{% endif %}" href="proposal.html">Proposal</a>
+                        <a class="nav-link {% if page.url == '/proposal.html' %}active{% endif %}" {% if page.url == '/proposal.html' %}aria-current="page"{% endif %} href="{{ '/proposal.html' | relative_url }}">Proposal</a>
                     </li>
                     <li class="nav-item {% if statusClass == 'disabled' %}d-none{% endif %}">
-                        <a class="nav-link {% if current[1] == 'status.html' %}active{% endif %}" href="status.html">Status</a>
+                        <a class="nav-link {% if page.url == '/status.html' %}active{% endif %}" {% if page.url == '/status.html' %}aria-current="page"{% endif %} href="{{ '/status.html' | relative_url }}">Status</a>
                     </li>
                     <li class="nav-item {% if finalClass == 'disabled' %}d-none{% endif %}">
-                        <a class="nav-link {% if current[1] == 'final.html' %}active{% endif %}" href="final.html">Final</a>
+                        <a class="nav-link {% if page.url == '/final.html' %}active{% endif %}" {% if page.url == '/final.html' %}aria-current="page"{% endif %} href="{{ '/final.html' | relative_url }}">Final</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if current[1] == 'team.html' %}active{% endif %}" href="team.html">Team</a>
+                        <a class="nav-link {% if page.url == '/team.html' %}active{% endif %}" {% if page.url == '/team.html' %}aria-current="page"{% endif %} href="{{ '/team.html' | relative_url }}">Team</a>
                     </li>
                 </ul>
             </div>
@@ -91,4 +91,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWbSxccPQtF3EpF3fnJHog6LaEVF3MAjmtO9UvCXUU9ADDu7b" crossorigin="anonymous"></script>
 </body>
 </html>
-
