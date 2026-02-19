@@ -9,9 +9,9 @@ title: Status
 
 ## Part 1: Clean Up the Website (30 points)
 
-- **Project/Team Name:**
-- **Improving the Front Page:**
-- **Team page:**
+- **Project/Team Name:** ✅
+- **Improving the Front Page:** ✅
+- **Team page:** ✅
 
 ## Part 2: Technical Description (35 points)
 
