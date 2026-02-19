@@ -1,6 +1,8 @@
 ---
 layout: default
-title:  Home
+title: Home
+statusClass: disabled
+finalClass: disabled
 ---
 
 ## Overview
