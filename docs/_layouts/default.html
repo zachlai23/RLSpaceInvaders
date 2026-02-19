@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ 'css/custom.css' | relative_url }}">
 </head>
 <body>
+    {% assign repo_url = site.repo_url | default: 'https://github.com/zachlai23/RLGalaga' %}
     {% assign current = page.url | downcase | split: '/' %}
     {% assign statusClass = 'disabled' %}
     {% assign proposalClass = 'disabled' %}
@@ -56,6 +57,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if page.url == '/team.html' %}active{% endif %}" {% if page.url == '/team.html' %}aria-current="page"{% endif %} href="{{ '/team.html' | relative_url }}">Team</a>
+                    </li>
+                    <li class="nav-item ms-lg-auto">
+                        <a class="nav-link" href="{{ repo_url }}" target="_blank" rel="noopener noreferrer">GitHub</a>
                     </li>
                 </ul>
             </div>
