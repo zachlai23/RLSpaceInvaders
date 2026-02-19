@@ -436,6 +436,14 @@ blockquote {
   border-radius: 0 8px 8px 0;
 }
 
+/* Content images */
+.main-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .page-title {
