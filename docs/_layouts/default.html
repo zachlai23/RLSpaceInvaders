@@ -24,14 +24,14 @@
     {% assign statusClass = 'disabled' %}
     {% assign proposalClass = 'disabled' %}
     {% assign finalClass = 'disabled' %}
-    {% for page in site.html_pages %}
-        {% if page.url == '/proposal.html' %}
+    {% for nav_page in site.html_pages %}
+        {% if nav_page.url == '/proposal.html' %}
             {% assign proposalClass = '' %}
         {% endif %}
-        {% if page.url == '/status.html' %}
+        {% if nav_page.url == '/status.html' %}
             {% assign statusClass = '' %}
         {% endif %}
-        {% if page.url == '/final.html' %}
+        {% if nav_page.url == '/final.html' %}
             {% assign finalClass = '' %}
         {% endif %}
     {% endfor %}

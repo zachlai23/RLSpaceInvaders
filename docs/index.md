@@ -17,7 +17,7 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       </div>
       <div class="card-body">
         <p>Learn about our project goals, methodology, and evaluation plan.</p>
-        <a href="proposal.html" class="btn btn-primary btn-sm">Read Proposal →</a>
+        <a href="{{ '/proposal.html' | relative_url }}" class="btn btn-primary btn-sm">Read Proposal →</a>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       </div>
       <div class="card-body">
         <p>Check out our current progress and project milestones.</p>
-        <a href="status.html" class="btn btn-primary btn-sm">View Status →</a>
+        <a href="{{ '/status.html' | relative_url }}" class="btn btn-primary btn-sm">View Status →</a>
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       </div>
       <div class="card-body">
         <p>See our final results and conclusions.</p>
-        <a href="final.html" class="btn btn-primary btn-sm">Read Final →</a>
+        <a href="{{ '/final.html' | relative_url }}" class="btn btn-primary btn-sm">Read Final →</a>
       </div>
     </div>
   </div>
@@ -50,4 +50,3 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
 Checkout our implementation on GitHub:
 
 **[View on GitHub →](https://github.com/zachlai23/RLGalaga)**
-
