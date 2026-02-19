@@ -16,6 +16,7 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --content-max: 900px;
+  --nav-link-radius: 8px;
 }
 
 * {
@@ -60,7 +61,7 @@ body {
 
 .nav-link {
   font-weight: 500;
-  transition: color 0.3s ease, opacity 0.3s ease;
+  transition: color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
@@ -70,7 +71,7 @@ body {
 
 .nav-link.active {
   color: var(--primary-color) !important;
-  border-bottom: 2px solid var(--primary-color);
+  box-shadow: inset 0 -2px 0 var(--primary-color);
 }
 
 /* Navbar layout fixes (prevents list bullets / vertical stacking when Bootstrap defaults are overridden) */
@@ -100,7 +101,8 @@ body {
 
 .navbar-nav .nav-link {
   padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--nav-link-radius);
+  overflow: hidden;
 }
 
 .navbar-nav .nav-link:hover {
