@@ -1,10 +1,10 @@
 # RLSpaceInvaders
 
-# RLSpaceInvaders
-
 A method-based reinforcement learning (RL) analysis project using **Space Invaders** as a controlled testbed. Rather than optimizing for a single “best” agent, we compare multiple RL methods (random → DQN-family → PPO) and run **hyperparameter sweeps + component ablations** to understand what drives performance, stability, and failure modes.
 
 This repo also includes a small GitHub Pages site (`/docs`) that hosts our proposal/status/final writeups.
+
+**Project site:** https://zachlai23.github.io/RLSpaceInvaders/team.html
 
 ## Project goals
 
@@ -97,6 +97,8 @@ print("OK")
 ## GitHub Pages site
 
 The project website lives in `docs/` and is rendered by GitHub Pages.
+
+**Project site:** https://zachlai23.github.io/RLSpaceInvaders/team.html
 
 Locally, you can preview it (one option):
 
