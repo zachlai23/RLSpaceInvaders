@@ -6,6 +6,7 @@ title: Status
 ## Project Status Report
 
 **Due date:** Monday, February 23, 2026
+**Last Modified:** Thursday, February 19, 2026
 
 ## Part 1: Clean Up the Website (30 points)
 
