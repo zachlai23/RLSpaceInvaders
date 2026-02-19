@@ -5,7 +5,7 @@ title: Status
 
 ## Project Status Report
 
-**Due date:** Monday, February 23, 2026
+**Due Date:** Monday, February 23, 2026
 
 **Last Modified:** Thursday, February 19, 2026
 
@@ -13,7 +13,7 @@ title: Status
 
 - **Project/Team Name:** ✅
 - **Improving the Front Page:** ✅
-- **Team page:** ✅
+- **Team Page:** ✅
 
 ## Part 2: Technical Description (35 points)
 
