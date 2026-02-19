@@ -25,7 +25,7 @@ The reinforcement learning agent is trained using the Proximal Policy Optimizati
 
 ![PPO clipped objective](assets/status/image1.png)
 
-where <em>r</em><sub>t</sub>(&theta;) = &pi;<sub>&theta;</sub>(a<sub>t</sub> | s<sub>t</sub>) / &pi;<sub>&theta;_old</sub>(a<sub>t</sub> | s<sub>t</sub>) is the probability ratio and <em>A</em><sub>t</sub> is the advantage estimate computed using Generalized Advantage Estimation (GAE). The total loss combines policy loss, value function loss, and entropy regularization to balance performance and exploration.
+where <span class="inline-formula">r<sub>t</sub>(&theta;) = &pi;<sub>&theta;</sub>(a<sub>t</sub> | s<sub>t</sub>) / &pi;<sub>&theta;old</sub>(a<sub>t</sub> | s<sub>t</sub>)</span> is the probability ratio and A<sub>t</sub> is the advantage estimate computed using Generalized Advantage Estimation (GAE). The total loss combines policy loss, value function loss, and entropy regularization to balance performance and exploration.
 
 Training data is collected by allowing the agent to interact directly with the environment. Each training rollout collects 256 environment steps before performing policy updates. The agent is trained for approximately 7000-10000 environment interaction steps for each experiment run. During each rollout update, the collected data is divided into mini-batches of size 64, and the policy network is optimized for 4 epochs using Stochastic Gradient Descent (SGD). The input to the policy network consists of stacked observation frames (FrameStack), and the output is a stochastic action sampled from the learned policy distribution.
 

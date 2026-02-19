@@ -446,6 +446,11 @@ blockquote {
   margin: 1rem 0;
 }
 
+.inline-formula {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .page-title {
