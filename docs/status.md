@@ -19,7 +19,18 @@ title: Status
 
 - **Project Summary**
 
-### 1. Approach
+## 1. Approach
+
+### DQN
+
+Deep Q-Network(DQN) is a model-free, value-based reinforcement learning algorithm. DQN is a popular method for training video games, especially atari games, and performs well when there are a large number of states.  DQN is based on Q-Learning, which is a model free algorithm that iteratively tests states and actions using rewards from a table of ‘Q-Values’.  Q-Learning struggles with large numbers of states and continuous actions, so Deep Q-Learning replaces this table in Q-Learning with a neural network that approximates Q-Values. The input to this network is the state, it outputs Q-values for all possible actions.
+
+Loss function: $$\mathcal{L}_\theta = (r + \gamma \max_{a'} Q_{\bar{\theta}}(s', a') - Q_\theta(s, a))^2$$
+
+
+Using the MinAtar environment, we trained the Stable-Baselines3 DQN model at first without adjusting any hyperparameters on runs of 100,000, 500,000, and 1,000,000 timesteps.    In the MinAtar environment, the agent receives a reward of +1 for every opponent destroyed, and there are no negative rewards.  The model uses a discrete action space with 6 possible outputs corresponding to moving and shooting.  The minAtar environment suffers from partial observability, where the model cannot interpret the direction of a moving object since it is shown in a static frame.  To combat this problem, we used temporal frame stacking, where groups of four frames are stacked together to give more context about the direction of the moving object. Frame stacking provided improved performance of the model, as it could determine whether bullets were moving at it or away from it. 
+
+### PPO
 
 Inspired by recent reinforcement learning research emphasizing system-level experimental design (Schwarzer et al., 2023), we evaluate PPO not only as a standalone algorithm but as a combination of interacting design components. Prior work suggests that performance gains in modern RL often arise from improving data utilization efficiency and increasing the number of gradient updates per collected sample, rather than introducing entirely new algorithmic structures. Following this principle, our experiments systematically analyze how temporal observation design (FrameStack size), training horizon length, and optimization settings interact to influence learning stability and convergence speed.
 
@@ -35,7 +46,25 @@ The training process uses a learning rate of 3 x 10<sup>-4</sup>, a PPO clipping
 
 This methodological design enables a systematic evaluation of how architectural, temporal, and optimization choices jointly influence training stability and overall learning performance in PPO.
 
-### 2. Evaluation
+## 2. Evaluation
+
+### DQN
+
+To evaluate the performance of basic DQN with temporal frame stacking, we conducted a series of test trials across 20 independent games for each model iteration (100k, 500k, and 1M steps). We recorded the maximum, minimum, and mean scores, alongside the average survival time.
+
+Analyzing these metrics we learned that the frame stacking nearly doubled the average reward at the 1 million timestep mark. More importantly, the agent demonstrated a significant increase in survival time, incorporating more defense and dodging, which is a critical in Space Invaders.
+
+The learning curve shown from the DQN with temporal frame stacking for the mean episode reward (ep_rew_mean) shows a rapid increase within the first 200,000 timesteps followed by a more steady refinement of the policy through 1 million steps. This plateau may indicate that the model had finished learning, and could possibly be trained on less timesteps that 1 million, increasing efficiency.
+
+Version,Steps,Avg Score,Avg Survival,Key Behavior
+Baseline,100K,10.3,18.5 frames,"Mainly Left, Fire, Right+Fire."
+Baseline,1M,14.2,110.0 frames,Static firing; reactive movement.
+Stacked,100K,6.3,43.6 frames,"Mix of Left, Right, Fire, Right+Fire. More active dodging."
+Stacked,1M,26.5,195.0 frames,Active dodging; predictive movement (inferring bullet paths).
+
+graphs here
+
+### PPO
 
 This part presents the evaluation of the implemented reinforcement learning agent. Both quantitative and qualitative analyses are used to demonstrate that the implementation is functional, stable, and capable of learning meaningful policies. In addition, an ablation study is conducted to analyze the contribution of key design components.
 
@@ -69,9 +98,15 @@ Qualitative evaluation is conducted by observing agent gameplay behavior under t
 
 Overall, the evaluation results demonstrate that the PPO implementation is stable, reproducible, and effective in learning policies for the target environment. Quantitative results confirm reward improvement and training stability, while qualitative observations verify that learned behaviors are meaningful and task-relevant. The ablation study further highlights the importance of temporal observation stacking in improving agent performance.
 
-### 3. Remaining Goals and Challenges
+## 3. Remaining Goals and Challenges
 
 #### Remaining Goals
+
+### DQN
+
+We have experimented with tuning hyperparameters away from the Atari defaults, which were not included in the current data report, but have shown much improved results in the 100K timestep runs when focused on accelerating the gradient update. We will continue tweaking hyperparameters, trying to achieve higher scores in lower amounts of training time and timesteps.  With the knowledge that Space Invaders can achieve higher results with DQN, we plan to explore the effects of different hyperparameters, and possible the tradeoff of compute and model performance.  Additionally, tables and graphs will be updated with the results from the best hyperparameter combination we have found.
+
+### PPO
 
 Our PPO-based agent demonstrates stable policy learning across observation settings; therefore, our remaining goal is not algorithm redesign, but strengthening experimental validation through system-level optimization of existing training components, with a focus on how data utilization efficiency and update frequency affect training stability and performance.
 
@@ -89,12 +124,16 @@ Another potential issue is training instability. Although PPO is generally stabl
 
 Finally, time management is a realistic constraint. Since this is a course project, our priority is to produce reliable evaluation and clear analysis rather than adding more complex model components. If necessary, we will prioritize experimental clarity, reproducibility, and systematic evaluation over expanding algorithm complexity.
 
-### 4. Resources Used
+## 4. Resources Used
 
 - Schwarzer, M., Obando-Ceron, J., Courville, A., Bellemare, M., Agarwal, R., & Castro, P. S. (2023). *Bigger, Better, Faster: Human-level Atari with human-level efficiency*. arXiv. https://doi.org/10.48550/arXiv.2305.19452
 - YouTube Channel Name. Video Title. YouTube, Year. https://www.youtube.com/watch?v=HlKHCg6rz0s
 - [MinAtar Space Invaders - Pgx Documentation](https://www.sotets.uk/pgx/minatar_space_invaders/)
 - Young, K., & Tian, T. (2019). *MinAtar: An Atari-Inspired Testbed for Thorough and Reproducible Reinforcement Learning Experiments*. arXiv preprint arXiv:1903.03176.
+- MinAtar arxiv paper - https://arxiv.org/pdf/1903.03176
+- Stable-Baselines3 DQN documentation - https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html#
+
+AI coding assistance was used for the basic DQN with model setup, data report printing format, and debugging.
 
 ## Part 3: Video Summary (35 points)
 
