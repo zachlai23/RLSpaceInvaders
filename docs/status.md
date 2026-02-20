@@ -56,13 +56,14 @@ Analyzing these metrics we learned that the frame stacking nearly doubled the av
 
 The learning curve shown from the DQN with temporal frame stacking for the mean episode reward (ep_rew_mean) shows a rapid increase within the first 200,000 timesteps followed by a more steady refinement of the policy through 1 million steps. This plateau may indicate that the model had finished learning, and could possibly be trained on less timesteps that 1 million, increasing efficiency.
 
-Version,Steps,Avg Score,Avg Survival,Key Behavior
-Baseline,100K,10.3,18.5 frames,"Mainly Left, Fire, Right+Fire."
-Baseline,1M,14.2,110.0 frames,Static firing; reactive movement.
-Stacked,100K,6.3,43.6 frames,"Mix of Left, Right, Fire, Right+Fire. More active dodging."
-Stacked,1M,26.5,195.0 frames,Active dodging; predictive movement (inferring bullet paths).
+| Version | Steps | Avg Score | Avg Survival | Key Behavior |
+| :--- | :--- | :--- | :--- | :--- |
+| **Baseline** | 100K | 10.3 | 18.5 frames | Mainly Left, Fire, Right+Fire. |
+| **Baseline** | 1M | 14.2 | 110.0 frames | Static firing; reactive movement. |
+| **Stacked** | 100K | 6.3 | 43.6 frames | Mix of Left, Right, Fire, Right+Fire. More active dodging. |
+| **Stacked** | 1M | **26.5** | **195.0 frames** | Active dodging; predictive movement (inferring bullet paths). |
 
-graphs here
+![DQN ep_rew_mean plot](assets/status/dqnGraph.png)
 
 ### PPO
 
