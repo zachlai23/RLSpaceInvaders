@@ -46,6 +46,16 @@ The training process uses a learning rate of 3 x 10<sup>-4</sup>, a PPO clipping
 
 This methodological design enables a systematic evaluation of how architectural, temporal, and optimization choices jointly influence training stability and overall learning performance in PPO.
 
+### Rainbow DQN
+
+Rainbow DQN is a model-free, value-based reinforcement learning algorithm that extends the base DQN by combining six improvements into a single agent: Double DQN, Dueling Networks, Prioritized Experience Replay (PER), Multi-step Returns, Distributional RL (C51), and Noisy Networks. Rainbow is a popular method for training video game agents and performs well in environments with large state spaces. Rather than introducing a fundamentally new algorithm, Rainbow demonstrates that these six components are complementary and jointly produce significantly better performance than any individual enhancement alone.
+
+The core extension over standard DQN is the distributional approach to Q-learning (C51), where instead of estimating a single expected Q-value per action, the network learns a full probability distribution over returns. Noisy Networks replace the standard ε-greedy exploration strategy with learnable parametric noise in the network weights, and the Dueling architecture separates the value and advantage streams to improve Q-value estimation. Double DQN reduces overestimation bias by using the online network to select actions and the target network to evaluate them.
+
+Loss function: $$\mathcal{L}(\theta) = -\frac{1}{B} \sum_{i=1}^{B} w_i \sum_{z} m(z) \log p_{\theta}(z \mid s_i, a_i)$$
+
+We applied Rainbow DQN to the MinAtar Space Invaders environment, training for 5,000,000 frames. The reward structure grants +1 for each enemy destroyed with no penalties, and the agent operates over a discrete action space of 6 moves corresponding to directional movement and shooting. Unlike standard DQN which uses a uniform replay buffer, Rainbow leverages a prioritized replay buffer of size 100,000 that samples transitions proportionally to their loss magnitude, controlled by a priority exponent of α = 0.5, ensuring the agent learns more frequently from surprising or high-error experiences. Rather than bootstrapping from a single next step, 3-step returns are used to propagate reward signals further back through time, improving credit assignment. The importance-sampling exponent β is gradually annealed from 0.4 to 1.0 throughout training to correct for the sampling bias introduced by prioritization. The target network is synchronized with the online network via a hard update every 1,000 gradient steps, and all parameters are optimized using Adam with a learning rate of 1×10⁻⁴.
+
 ## 2. Evaluation
 
 ### DQN
