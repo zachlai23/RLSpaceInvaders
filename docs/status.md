@@ -34,7 +34,7 @@ Using the MinAtar environment, we trained the Stable-Baselines3 DQN model at fir
 
 Our proposal stated we were going to explore Double DQN, but we instead chose to explore Quantile Regression Deep Q-Network(QRDQN), as QRDQN was available on Stable-Baselines3-contrib, which keeps consistency with our baseline DQN model used.  QRDQN is a distributional reinforcement learning algorithm. that builds on top of DQN by using quantile regression to parametrize the return distribution, rather than estimating a single scalar mean.  QR-DQN modifies the output layer of a standard DQN to produce N quantile values per action, which helps account for uncertainty in the environment. Since it tracks the full distribution, The distributional approach helps avoid the overestimation problem that is a known weakness of DQN.
 
-Loss function: Quantile Huber Loss for a specific quantile $\tau$:
+Loss function: Quantile Huber Loss for a specific quantile &tau;:
 
 $$
 \rho_\tau^\kappa(u) = |\tau - \delta_{\{u < 0\}}| \mathcal{L}_\kappa(u)
