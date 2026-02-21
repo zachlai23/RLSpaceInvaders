@@ -109,6 +109,50 @@ Qualitative evaluation is conducted by observing agent gameplay behavior under t
 
 Overall, the evaluation results demonstrate that the PPO implementation is stable, reproducible, and effective in learning policies for the target environment. Quantitative results confirm reward improvement and training stability, while qualitative observations verify that learned behaviors are meaningful and task-relevant. The ablation study further highlights the importance of temporal observation stacking in improving agent performance.
 
+### Rainbow DQN
+
+#### Evaluation Setup
+
+20 independent test episodes were run at four checkpoints (250k, 500k, 750k, 1M steps). Metrics recorded: max, min, mean score, and average survival time. The agent runs in greedy eval mode with noisy layers disabled; the environment retains sticky actions (10%) and difficulty ramping.
+
+#### Quantitative Results
+
+#### Training Performance
+
+The learning curve shows a sharp rise within the first 300k timesteps, followed by steady improvement through 1M steps. Unlike the DQN variants which plateau around 500k, Rainbow DQN continues improving throughout, suggesting the policy had not yet saturated at 1M steps.
+
+![Rainbow DQN ep_rew_mean plot](assets/status/RainbowdDQNGraph.png)
+
+#### Performance Summary
+
+| Version | Steps | Avg Score | Max Score | Min Score | Avg Survival | Key Behavior |
+|---------|-------|-----------|-----------|-----------|--------------|--------------|
+| Rainbow | 250k  | 74.8      | 167.0     | 7.0       | 635.9 frames | Right+Fire 58%, Left 21%, Fire 18% |
+| Rainbow | 500k  | 79.6      | 166.0     | 18.0      | 596.6 frames | Right+Fire 56%, Left 20%, Fire 18% |
+| Rainbow | 750k  | 94.0      | 236.0     | 7.0       | 693.0 frames | Right+Fire 48%, Left 21%, Fire 19% |
+| Rainbow | 1M    | 106.0     | 237.0     | 22.0      | 817.8 frames | Right+Fire 42%, Left 19%, Fire 17% |
+
+Average reward grows 42% from 250k to 1M. Survival time follows the same trend, reaching 817.8 frames at 1M, confirming the agent is surviving longer rather than just scoring faster.
+
+#### Comparison to DQN Baselines
+
+| Version      | Steps | Avg Score | Avg Survival  |
+|--------------|-------|-----------|---------------|
+| Baseline DQN | 1M    | 14.2      | 110.0 frames  |
+| Stacked DQN  | 1M    | 26.5      | 195.0 frames  |
+| Rainbow DQN  | 250k  | 74.8      | 635.9 frames  |
+| Rainbow DQN  | 1M    | 106.0     | 817.8 frames  |
+
+Rainbow at 1M is **7.5× higher score** and **7.4× longer survival** than Baseline DQN, and **4× better** than Stacked DQN on both metrics. Most notably, Rainbow at just **250k steps already outperforms Stacked DQN at 1M**, demonstrating significantly greater sample efficiency.
+
+#### Qualitative Results
+
+At 250k steps the agent shows a strong positional bias, firing predominantly from the right side (Right+Fire 58%). By 1M steps this drops to 42%, with the agent repositioning more dynamically between shots and adjusting laterally relative to incoming bullets — a shift from reactive, fixed-position firing toward active spatial control.
+
+#### Discussion
+
+The six Rainbow components compound to produce substantial gains over both DQN baselines. Distributional RL and prioritized replay appear most impactful, enabling faster early learning and continued improvement beyond the 1M step mark. Noisy networks avoid the premature convergence seen in epsilon-greedy DQN, explaining why Rainbow's curve does not plateau. High score variance (~50–68 std) is attributable to the stochastic environment rather than policy instability.
+
 ## 3. Remaining Goals and Challenges
 
 #### Remaining Goals
