@@ -181,8 +181,6 @@ Finally, time management is a realistic constraint. Since this is a course proje
 
 ### Rainbow DQN
 
-## Remaining Goals
-
 Our Rainbow DQN agent already demonstrates strong performance relative to the DQN baselines, so our remaining focus is on validation and efficiency rather than algorithmic redesign. We plan to explore targeted hyperparameter tuning away from the standard Atari defaults. Parameters such as the PER priority exponent, n-step return horizon, and replay buffer size were designed for full Atari and may not be optimal for MinAtar's shorter episode structure. The goal is to achieve comparable or better performance in fewer timesteps, improving training efficiency without sacrificing results. We also aim to strengthen experimental reliability. Current conclusions are based on single training runs. If time and compute allow, we will repeat key runs with different random seeds to verify that observed improvements are consistent rather than the result of a lucky initialization. Last but not least, we will try to analyze a lightweight comparison against the DQN and PPO baselines already implemented by the team, providing broader context for where Rainbow DQN sits relative to all three algorithms in this environment.
 
 **Expected Challenges**
