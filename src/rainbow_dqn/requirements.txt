@@ -1,0 +1,13 @@
+# Core RL dependencies for Rainbow DQN on MinAtar
+# Install with:
+#   pip install -r requirements.txt
+#
+# PyTorch — install separately via https://pytorch.org/get-started/locally/
+# for the correct CUDA/CPU variant, e.g.:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121  (CUDA 12.1)
+
+torch
+numpy
+gymnasium
+MinAtar
