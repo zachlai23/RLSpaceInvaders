@@ -121,7 +121,7 @@ Overall, the evaluation results demonstrate that the PPO implementation is stabl
 
 The learning curve shows a sharp rise within the first 300k timesteps, followed by steady improvement through 1M steps. Unlike the DQN variants which plateau around 500k, Rainbow DQN continues improving throughout, suggesting the policy had not yet saturated at 1M steps.
 
-![Rainbow DQN ep_rew_mean plot](assets/status/RainbowdDQNGraph.png)
+![Rainbow DQN ep_rew_mean plot](assets/status/RainbowDQNGraph.png)
 
 #### Performance Summary
 
