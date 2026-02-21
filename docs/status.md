@@ -17,7 +17,12 @@ title: Status
 
 ## Part 2: Technical Description (35 points)
 
-- **Project Summary**
+## Summary
+
+Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. Rather than treating this as a one-off application, our project uses Space Invaders as a controlled testbed for comparing and understanding advanced reinforcement learning methods.
+
+To make broad comparisons feasible and fully focus on algorithm performance, we will use the MinAtar SpaceInvaders through Gymnasium. MinAtar provides a simplified 10×10 channel-based observation space that trains much faster than full Atari environments, enabling us to run multiple seeds, hyperparameter sweeps, and component ablations within our compute budget. We plan to evaluate and compare the performance of Deep Q-Network(DQN), Quantile Regression Deep Q-Learning(QRDQN), Rainbow Deep Q-Learning, and Proximal Policy Optimization(PPO).
+
 
 ## 1. Approach
 
