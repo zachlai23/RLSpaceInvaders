@@ -196,7 +196,7 @@ The primary constraint is computational cost. Rainbow DQN is significantly more 
 - MinAtar arxiv paper - https://arxiv.org/pdf/1903.03176
 - Stable-Baselines3 DQN documentation - https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html#
 
-AI coding assistance was used for the basic DQN with model setup, data report printing format, and debugging.
+AI coding assistance was used for model setup, data report printing format, and debugging.
 
 ## Part 3: Video Summary (35 points)
 
