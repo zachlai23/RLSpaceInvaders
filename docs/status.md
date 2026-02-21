@@ -179,6 +179,16 @@ Another potential issue is training instability. Although PPO is generally stabl
 
 Finally, time management is a realistic constraint. Since this is a course project, our priority is to produce reliable evaluation and clear analysis rather than adding more complex model components. If necessary, we will prioritize experimental clarity, reproducibility, and systematic evaluation over expanding algorithm complexity.
 
+### Rainbow DQN
+
+## Remaining Goals
+
+Our Rainbow DQN agent already demonstrates strong performance relative to the DQN baselines, so our remaining focus is on validation and efficiency rather than algorithmic redesign. We plan to explore targeted hyperparameter tuning away from the standard Atari defaults. Parameters such as the PER priority exponent, n-step return horizon, and replay buffer size were designed for full Atari and may not be optimal for MinAtar's shorter episode structure. The goal is to achieve comparable or better performance in fewer timesteps, improving training efficiency without sacrificing results. We also aim to strengthen experimental reliability. Current conclusions are based on single training runs. If time and compute allow, we will repeat key runs with different random seeds to verify that observed improvements are consistent rather than the result of a lucky initialization. Last but not least, we will try to analyze a lightweight comparison against the DQN and PPO baselines already implemented by the team, providing broader context for where Rainbow DQN sits relative to all three algorithms in this environment.
+
+**Expected Challenges**
+
+The primary constraint is computational cost. Rainbow DQN is significantly more expensive per step than standard DQN due to distributional loss computation and prioritized sampling, which limits how many hyperparameter configurations or training seeds we can realistically evaluate. We will prioritize the configurations most likely to improve sample efficiency and focus on learning trends rather than exhaustive final performance comparisons. Training variance is also a practical concern. The MinAtar environment's sticky actions and difficulty ramping introduce high episode-to-episode variance, making it difficult to draw strong conclusions from small evaluation sets. Where possible, we will increase the number of test episodes per checkpoint to produce more reliable estimates.
+
 ## 4. Resources Used
 
 - Schwarzer, M., Obando-Ceron, J., Courville, A., Bellemare, M., Agarwal, R., & Castro, P. S. (2023). *Bigger, Better, Faster: Human-level Atari with human-level efficiency*. arXiv. https://doi.org/10.48550/arXiv.2305.19452
