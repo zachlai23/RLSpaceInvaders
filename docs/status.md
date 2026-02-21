@@ -3,20 +3,6 @@ layout: default
 title: Status
 ---
 
-## Project Status Report
-
-**Due Date:** Monday, February 23, 2026
-
-**Last Modified:** Thursday, February 19, 2026
-
-## Part 1: Clean Up the Website (30 points)
-
-- **Project/Team Name:** ✅
-- **Improving the Front Page:** ✅
-- **Team Page:** ✅
-
-## Part 2: Technical Description (35 points)
-
 ## Summary
 
 Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. Rather than treating this as a one-off application, our project uses Space Invaders as a controlled testbed for comparing and understanding advanced reinforcement learning methods.
@@ -24,7 +10,7 @@ Space Invaders is a classic fixed-shooter game where the player controls a starf
 To make broad comparisons feasible and fully focus on algorithm performance, we will use the MinAtar SpaceInvaders through Gymnasium. MinAtar provides a simplified 10×10 channel-based observation space that trains much faster than full Atari environments, enabling us to run multiple seeds, hyperparameter sweeps, and component ablations within our compute budget. We plan to evaluate and compare the performance of Deep Q-Network(DQN), Quantile Regression Deep Q-Learning(QRDQN), Rainbow Deep Q-Learning, and Proximal Policy Optimization(PPO).
 
 
-## 1. Approach
+## Approach
 
 ### DQN
 
@@ -74,7 +60,7 @@ Loss function: $$\mathcal{L}(\theta) = -\frac{1}{B} \sum_{i=1}^{B} w_i \sum_{z} 
 
 We applied Rainbow DQN to the MinAtar Space Invaders environment, training for 5,000,000 frames. The reward structure grants +1 for each enemy destroyed with no penalties, and the agent operates over a discrete action space of 6 moves corresponding to directional movement and shooting. Unlike standard DQN which uses a uniform replay buffer, Rainbow leverages a prioritized replay buffer of size 100,000 that samples transitions proportionally to their loss magnitude, controlled by a priority exponent of α = 0.5, ensuring the agent learns more frequently from surprising or high-error experiences. Rather than bootstrapping from a single next step, 3-step returns are used to propagate reward signals further back through time, improving credit assignment. The importance-sampling exponent β is gradually annealed from 0.4 to 1.0 throughout training to correct for the sampling bias introduced by prioritization. The target network is synchronized with the online network via a hard update every 1,000 gradient steps, and all parameters are optimized using Adam with a learning rate of 1×10⁻⁴.
 
-## 2. Evaluation
+## Evaluation
 
 ### DQN
 
@@ -183,7 +169,7 @@ At 250k steps the agent shows a strong positional bias, firing predominantly fro
 
 The six Rainbow components compound to produce substantial gains over both DQN baselines. Distributional RL and prioritized replay appear most impactful, enabling faster early learning and continued improvement beyond the 1M step mark. Noisy networks avoid the premature convergence seen in epsilon-greedy DQN, explaining why Rainbow's curve does not plateau. High score variance (~50–68 std) is attributable to the stochastic environment rather than policy instability.
 
-## 3. Remaining Goals and Challenges
+## Remaining Goals and Challenges
 
 #### Remaining Goals
 
@@ -221,7 +207,7 @@ Our Rainbow DQN agent already demonstrates strong performance relative to the DQ
 
 The primary constraint is computational cost. Rainbow DQN is significantly more expensive per step than standard DQN due to distributional loss computation and prioritized sampling, which limits how many hyperparameter configurations or training seeds we can realistically evaluate. We will prioritize the configurations most likely to improve sample efficiency and focus on learning trends rather than exhaustive final performance comparisons. Training variance is also a practical concern. The MinAtar environment's sticky actions and difficulty ramping introduce high episode-to-episode variance, making it difficult to draw strong conclusions from small evaluation sets. Where possible, we will increase the number of test episodes per checkpoint to produce more reliable estimates.
 
-## 4. Resources Used
+## Resources Used
 
 - Schwarzer, M., Obando-Ceron, J., Courville, A., Bellemare, M., Agarwal, R., & Castro, P. S. (2023). *Bigger, Better, Faster: Human-level Atari with human-level efficiency*. arXiv. https://doi.org/10.48550/arXiv.2305.19452
 - YouTube Channel Name. Video Title. YouTube, Year. https://www.youtube.com/watch?v=HlKHCg6rz0s
