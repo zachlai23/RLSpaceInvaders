@@ -30,6 +30,14 @@ Loss function: $$\mathcal{L}_\theta = (r + \gamma \max_{a'} Q_{\bar{\theta}}(s',
 
 Using the MinAtar environment, we trained the Stable-Baselines3 DQN model at first without adjusting any hyperparameters on runs of 100,000, 500,000, and 1,000,000 timesteps.    In the MinAtar environment, the agent receives a reward of +1 for every opponent destroyed, and there are no negative rewards.  The model uses a discrete action space with 6 possible outputs corresponding to moving and shooting.  The minAtar environment suffers from partial observability, where the model cannot interpret the direction of a moving object since it is shown in a static frame.  To combat this problem, we used temporal frame stacking, where groups of four frames are stacked together to give more context about the direction of the moving object. Frame stacking provided improved performance of the model, as it could determine whether bullets were moving at it or away from it. 
 
+### QRDQN
+
+Our proposal stated we were going to explore Double DQN, but we instead chose to explore Quantile Regression Deep Q-Network(QRDQN), as QRDQN was available on Stable-Baselines3-contrib, which keeps consistency with our baseline DQN model used.  QRDQN is a distributional reinforcement learning algorithm. that builds on top of DQN by using quantile regression to parametrize the return distribution, rather than estimating a single scalar mean.  QR-DQN modifies the output layer of a standard DQN to produce N quantile values per action, which helps account for uncertainty in the environment. Since it tracks the full distribution, The distributional approach helps avoid the overestimation problem that is a known weakness of DQN.
+
+Loss function: Quantile Huber Loss for a specific quantile \tau: $$\rho_\tau^\kappa(u) = |\tau - \delta_{\{u < 0\}}| \mathcal{L}_\kappa(u)$$
+
+As mentioned above, we used the QRDQN model from Stable-Baselines3-contrib to keep consistency with the DQN model used. The same reward, action space and time step trials were used along with 4 frame temporal stacking. Again, no hyperparameters were set for the first trials, but will be tested and tuned moving forward.  
+
 ### PPO
 
 Inspired by recent reinforcement learning research emphasizing system-level experimental design (Schwarzer et al., 2023), we evaluate PPO not only as a standalone algorithm but as a combination of interacting design components. Prior work suggests that performance gains in modern RL often arise from improving data utilization efficiency and increasing the number of gradient updates per collected sample, rather than introducing entirely new algorithmic structures. Following this principle, our experiments systematically analyze how temporal observation design (FrameStack size), training horizon length, and optimization settings interact to influence learning stability and convergence speed.
@@ -74,6 +82,18 @@ The learning curve shown from the DQN with temporal frame stacking for the mean 
 | **Stacked** | 1M | **26.5** | **195.0 frames** | Active dodging; predictive movement (inferring bullet paths). |
 
 ![DQN ep_rew_mean plot](assets/status/dqnGraph.png)
+
+### QRDQN
+
+When comparing the QRDQN average metrics across 20 games to the DQN with temporal frame stacking, we observe that QRDQN slightly outperforms in average score, but survives in the game for significantly longer.  The learning curve shown in the graph is interesting, as we see the QRDQN learn slower for around the first 500,000 timesteps, but has a sharp increase and shows a higher mean episode reward than DQN for the rest of the timesteps.  We analyzed this as the initial exploration taking longer to estimate the full distribution of returns, but once they are found the performance increases greatly.
+
+| Timesteps | Avg Score | Avg Survival (frames) | Key Behavior |
+| :--- | :--- | :--- | :--- |
+| **100k** | 8.25 | 53.9 | Left, fire, very heavy on right + fire. Not much dodging. |
+| **500k** | 16.60 | 113.5 | Same, but more left and fire than 100k. |
+| **1M** | 28.40 | 249.9 | Same, a little more balance. |
+
+![QRDQN ep_rew_mean plot](assets/status/qrdqnGraph.png)
 
 ### PPO
 
@@ -161,6 +181,10 @@ The six Rainbow components compound to produce substantial gains over both DQN b
 
 We have experimented with tuning hyperparameters away from the Atari defaults, which were not included in the current data report, but have shown much improved results in the 100K timestep runs when focused on accelerating the gradient update. We will continue tweaking hyperparameters, trying to achieve higher scores in lower amounts of training time and timesteps.  With the knowledge that Space Invaders can achieve higher results with DQN, we plan to explore the effects of different hyperparameters, and possible the tradeoff of compute and model performance.  Additionally, tables and graphs will be updated with the results from the best hyperparameter combination we have found.
 
+### QRDQN
+
+This version of QRDQN did not tune any hyperparameters. We expect as with standard DQN, once we tune the hyperparameters we will see a significant increase in the agent’s performance, and require less time steps to perform well in Space Invaders.  We also aim to analyze the architecture more in depth, and understand more deeply what aspects of it contribute to the performance.
+
 ### PPO
 
 Our PPO-based agent demonstrates stable policy learning across observation settings; therefore, our remaining goal is not algorithm redesign, but strengthening experimental validation through system-level optimization of existing training components, with a focus on how data utilization efficiency and update frequency affect training stability and performance.
@@ -195,6 +219,9 @@ The primary constraint is computational cost. Rainbow DQN is significantly more 
 - Young, K., & Tian, T. (2019). *MinAtar: An Atari-Inspired Testbed for Thorough and Reproducible Reinforcement Learning Experiments*. arXiv preprint arXiv:1903.03176.
 - MinAtar arxiv paper - https://arxiv.org/pdf/1903.03176
 - Stable-Baselines3 DQN documentation - https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html#
+- QRDQN arxiv - https://arxiv.org/pdf/1710.10044
+- QRDQN explained - https://www.emergentmind.com/topics/quantile-regression-deep-q-network-qr-dqn
+- QRDQN Stable-Baselines3-contrib - https://sb3-contrib.readthedocs.io/en/master/modules/qrdqn.html
 
 AI coding assistance was used for model setup, data report printing format, and debugging.
 
