@@ -223,4 +223,7 @@ AI coding assistance was used for model setup, data report printing format, and 
 
 ## Part 3: Video Summary (35 points)
 
-Create a 2-5 (ideally ~3) minute video summarizing your progress so far.
+<video controls width="100%">
+  <source src="assets/status/RLSpaceInvaders%20Progress%20Report.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
