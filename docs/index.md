@@ -5,7 +5,14 @@ statusClass: disabled
 finalClass: disabled
 ---
 
-Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiative to train autonomous agents to play Space Invaders using advanced machine learning algorithms.
+<div class="card mt-2 mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">🚀 Welcome</h5>
+  </div>
+  <div class="card-body">
+    <p class="mb-0">Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiative to train autonomous agents to play Space Invaders using advanced machine learning algorithms.</p>
+  </div>
+</div>
 
 ## Quick Links
 
