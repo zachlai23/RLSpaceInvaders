@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">AI agent and Space Invaders</title>
+  <desc id="desc">A stylized Space Invaders alien facing a simple neural network diagram.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.55" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#3b0764"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a5b4fc" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#f0abfc" stop-opacity="0.75"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .label { fill: rgba(255,255,255,0.86); font: 700 18px system-ui, -apple-system, Segoe UI, Inter, sans-serif; letter-spacing: 0.3px; }
+      .sub { fill: rgba(255,255,255,0.72); font: 500 14px system-ui, -apple-system, Segoe UI, Inter, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <rect width="1200" height="400" fill="url(#grid)"/>
+  <circle cx="920" cy="85" r="190" fill="url(#glow)" opacity="0.10"/>
+  <circle cx="260" cy="320" r="240" fill="#22c55e" opacity="0.06"/>
+
+  <!-- Section titles -->
+  <text x="110" y="70" class="label">SPACE INVADERS</text>
+  <text x="790" y="70" class="label">AI AGENT</text>
+  <text x="110" y="95" class="sub">Pixel enemy patterns</text>
+  <text x="790" y="95" class="sub">Value / policy network</text>
+
+  <!-- Pixel alien (left) -->
+  <g transform="translate(160 120)" filter="url(#softGlow)">
+    <g fill="#22c55e">
+      <!-- 12x12 grid pixels, each pixel is 18x18 -->
+      <!-- Row 1 -->
+      <rect x="72" y="0" width="18" height="18"/>
+      <rect x="90" y="0" width="18" height="18"/>
+      <rect x="108" y="0" width="18" height="18"/>
+      <rect x="126" y="0" width="18" height="18"/>
+      <!-- Row 2 -->
+      <rect x="54" y="18" width="18" height="18"/>
+      <rect x="72" y="18" width="18" height="18"/>
+      <rect x="90" y="18" width="18" height="18"/>
+      <rect x="108" y="18" width="18" height="18"/>
+      <rect x="126" y="18" width="18" height="18"/>
+      <rect x="144" y="18" width="18" height="18"/>
+      <!-- Row 3 -->
+      <rect x="36" y="36" width="18" height="18"/>
+      <rect x="54" y="36" width="18" height="18"/>
+      <rect x="72" y="36" width="18" height="18"/>
+      <rect x="90" y="36" width="18" height="18"/>
+      <rect x="108" y="36" width="18" height="18"/>
+      <rect x="126" y="36" width="18" height="18"/>
+      <rect x="144" y="36" width="18" height="18"/>
+      <rect x="162" y="36" width="18" height="18"/>
+      <!-- Row 4 (eyes) -->
+      <rect x="36" y="54" width="18" height="18"/>
+      <rect x="54" y="54" width="18" height="18"/>
+      <rect x="90" y="54" width="18" height="18"/>
+      <rect x="108" y="54" width="18" height="18"/>
+      <rect x="144" y="54" width="18" height="18"/>
+      <rect x="162" y="54" width="18" height="18"/>
+      <!-- Row 5 -->
+      <rect x="18" y="72" width="18" height="18"/>
+      <rect x="36" y="72" width="18" height="18"/>
+      <rect x="54" y="72" width="18" height="18"/>
+      <rect x="72" y="72" width="18" height="18"/>
+      <rect x="90" y="72" width="18" height="18"/>
+      <rect x="108" y="72" width="18" height="18"/>
+      <rect x="126" y="72" width="18" height="18"/>
+      <rect x="144" y="72" width="18" height="18"/>
+      <rect x="162" y="72" width="18" height="18"/>
+      <rect x="180" y="72" width="18" height="18"/>
+      <!-- Row 6 -->
+      <rect x="18" y="90" width="18" height="18"/>
+      <rect x="72" y="90" width="18" height="18"/>
+      <rect x="90" y="90" width="18" height="18"/>
+      <rect x="108" y="90" width="18" height="18"/>
+      <rect x="126" y="90" width="18" height="18"/>
+      <rect x="180" y="90" width="18" height="18"/>
+      <!-- Row 7 -->
+      <rect x="18" y="108" width="18" height="18"/>
+      <rect x="36" y="108" width="18" height="18"/>
+      <rect x="54" y="108" width="18" height="18"/>
+      <rect x="72" y="108" width="18" height="18"/>
+      <rect x="90" y="108" width="18" height="18"/>
+      <rect x="108" y="108" width="18" height="18"/>
+      <rect x="126" y="108" width="18" height="18"/>
+      <rect x="144" y="108" width="18" height="18"/>
+      <rect x="162" y="108" width="18" height="18"/>
+      <rect x="180" y="108" width="18" height="18"/>
+      <!-- Row 8 (legs) -->
+      <rect x="54" y="126" width="18" height="18"/>
+      <rect x="72" y="126" width="18" height="18"/>
+      <rect x="126" y="126" width="18" height="18"/>
+      <rect x="144" y="126" width="18" height="18"/>
+      <!-- Row 9 -->
+      <rect x="36" y="144" width="18" height="18"/>
+      <rect x="54" y="144" width="18" height="18"/>
+      <rect x="72" y="144" width="18" height="18"/>
+      <rect x="90" y="144" width="18" height="18"/>
+      <rect x="108" y="144" width="18" height="18"/>
+      <rect x="126" y="144" width="18" height="18"/>
+      <rect x="144" y="144" width="18" height="18"/>
+      <rect x="162" y="144" width="18" height="18"/>
+    </g>
+    <g fill="rgba(15, 23, 42, 0.95)">
+      <rect x="72" y="54" width="18" height="18"/>
+      <rect x="126" y="54" width="18" height="18"/>
+    </g>
+  </g>
+
+  <!-- Neural network (right) -->
+  <g transform="translate(690 120)" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2">
+    <!-- connections -->
+    <path d="M80 40 C150 40 150 40 220 40"/>
+    <path d="M80 40 C150 75 150 75 220 110"/>
+    <path d="M80 40 C150 120 150 120 220 180"/>
+
+    <path d="M80 110 C150 40 150 40 220 40"/>
+    <path d="M80 110 C150 75 150 75 220 110"/>
+    <path d="M80 110 C150 120 150 120 220 180"/>
+
+    <path d="M80 180 C150 40 150 40 220 40"/>
+    <path d="M80 180 C150 75 150 75 220 110"/>
+    <path d="M80 180 C150 120 150 120 220 180"/>
+
+    <!-- output arrow -->
+    <path d="M245 110 C305 110 330 110 390 110" stroke="rgba(255,255,255,0.65)"/>
+    <path d="M390 110 l-12 -8 m12 8 l-12 8" stroke="rgba(255,255,255,0.65)" stroke-linecap="round"/>
+
+    <!-- nodes -->
+    <g fill="#a5b4fc" stroke="rgba(255,255,255,0.8)" filter="url(#softGlow)">
+      <!-- input layer -->
+      <circle cx="80" cy="40" r="14"/>
+      <circle cx="80" cy="110" r="14"/>
+      <circle cx="80" cy="180" r="14"/>
+      <!-- hidden layer -->
+      <circle cx="220" cy="40" r="14"/>
+      <circle cx="220" cy="110" r="14"/>
+      <circle cx="220" cy="180" r="14"/>
+      <!-- output layer -->
+      <circle cx="410" cy="110" r="16" fill="#f0abfc"/>
+    </g>
+    <text x="432" y="116" class="sub" fill="rgba(255,255,255,0.82)" stroke="none">action</text>
+  </g>
+
+  <!-- Center hint -->
+  <g opacity="0.8">
+    <path d="M520 200 C565 140 635 140 680 200" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+    <circle cx="600" cy="200" r="3" fill="rgba(255,255,255,0.55)"/>
+    <text x="515" y="250" class="sub" fill="rgba(255,255,255,0.70)">learn a policy to dodge + shoot</text>
+  </g>
+</svg>

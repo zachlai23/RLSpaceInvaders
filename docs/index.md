@@ -10,6 +10,12 @@ finalClass: disabled
     <h5 class="mb-0">🚀 Welcome</h5>
   </div>
   <div class="card-body">
+    <img
+      src="{{ '/assets/hero-ai-invaders.svg' | relative_url }}"
+      class="img-fluid rounded mb-3"
+      alt="Stylized Space Invaders alien facing a simple AI network diagram"
+      loading="lazy"
+    />
     <p class="mb-0">Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiative to train autonomous agents to play Space Invaders using advanced machine learning algorithms.</p>
   </div>
 </div>
