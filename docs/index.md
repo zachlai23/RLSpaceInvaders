@@ -5,17 +5,7 @@ statusClass: disabled
 finalClass: disabled
 ---
 
-## Overview
-
 Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiative to train autonomous agents to play Space Invaders using advanced machine learning algorithms.
-
-## What's New
-
-The [Status page]({{ '/status.html' | relative_url }}) has just been updated with a new status report.
-
-- Added a full multi-algorithm report covering DQN, QRDQN, PPO, and Rainbow DQN.
-- Included updated evaluation results with performance tables, learning-curve visuals, and baseline comparisons.
-- Added a clearer section on remaining goals, expected challenges, resources used, and a project video summary.
 
 ## Quick Links
 
@@ -54,6 +44,19 @@ The [Status page]({{ '/status.html' | relative_url }}) has just been updated wit
     </div>
   </div>
 </div>
+
+## What's New
+
+The [Status page]({{ '/status.html' | relative_url }}) has just been updated with a new status report.
+
+- Added a full multi-algorithm report covering DQN, QRDQN, PPO, and Rainbow DQN.
+- Included updated evaluation results with performance tables, learning-curve visuals, and baseline comparisons.
+- Added a clearer section on remaining goals, expected challenges, resources used, and a project video summary.
+
+<video controls width="100%">
+  <source src="assets/status/RLSpaceInvaders%20Progress%20Report.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## 💻 Source Code
 
