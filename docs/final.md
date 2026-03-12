@@ -15,6 +15,15 @@ title: Final
 
 ## Approach
 
+### DQN
+
+Deep Q-Network(DQN) is a model-free, value-based reinforcement learning algorithm. DQN is a popular method for training video games, and performs well when there are a large number of states. DQN is based on Q-Learning, which is a model free algorithm that iteratively tests states and actions using rewards from a table of ‘Q-Values’. Q-Learning struggles with large numbers of states and continuous actions, so Deep Q-Learning replaces this table in Q-Learning with a neural network that approximates Q-Values. The input to this network is the state, it outputs Q-values for all possible actions.
+
+Loss function: $$\mathcal{L}_\theta = (r + \gamma \max_{a'} Q_{\bar{\theta}}(s', a') - Q_\theta(s, a))^2$$
+
+In the MinAtar environment, the agent receives a reward of +1 for every opponent destroyed, and there are no negative rewards. The model uses a discrete action space with 6 possible outputs corresponding to moving and shooting. The MinAtar environment suffers from partial observability, where the model cannot interpret the direction of a moving object since it is shown in a static frame. To combat this problem, we used temporal frame stacking, where groups of four frames are stacked together to give more context about the direction of the moving object. Frame stacking provided improved performance of the model, as it could determine whether bullets were moving at it or away from it.
+We chose to train the Stable-Baselines3 DQN model. We first trained DQN without adjusting any hyperparameters on runs of 100,000, 500,000, and 1,000,000 timesteps, comparing the results of using temporal frame stacking to the results without it.  To continue, we added similar hyperparameters to the MinAtar paper(Young, Tian, 2019), and tuned them iteratively on runs of 1,000,000 timesteps. Some significant hyperparameters that we tuned were the exploration fraction, learning rate, and target update interval.
+
 ### PPO Approach
 
 For this project, we implemented the Proximal Policy Optimization (PPO) algorithm to train an agent in the MinAtar Space Invaders environment. We chose PPO because it is generally more stable and easier to tune than other policy gradient methods. The core of our approach relies on an Actor-Critic architecture that optimizes a "clipped" surrogate objective. This objective prevents the policy from changing too drastically in a single update, which helps keep the training stable.
@@ -36,6 +45,27 @@ To study how different design choices affect PPO training behavior, we evaluated
 ---
 
 ## Evaluation
+
+### DQN
+
+To evaluate the performance our DQN model, we conducted a series of test trials across 20 independent games for each model iteration(baseline, frame stacking, frame stacking and tuned hyperparameters). We recorded the maximum, minimum, and mean scores, alongside the average survival time which is an important metric in a game like Space Invaders. We also tested a random policy to serve as a baseline to compare our model performance to.
+
+Analyzing these metrics we learned that the frame stacking nearly doubled the average score compared to the base model, and the final version with the hyperparameters tuned scored significantly higher than that. More importantly, the agent demonstrated a significant increase in survival time, incorporating more defense and dodging with the hyperparameters.
+
+The learning curve shown from the final training we ran for the mean episode reward (ep_rew_mean) shows a linear increase within the first 300,000 timesteps followed by a more steady refinement of the policy through 1 million steps, which is influenced by our choice of the exploration fraction. This plateau may indicate that the model had finished learning, and could possibly be trained on less timesteps that 1 million, increasing efficiency.
+
+The DQN model with tuned hyperparameters and temporal frame stacking significantly outperformed the models without hyperparameters and frame stacking as expected, and is used to evaluate the other advanced methods against.
+
+| Model | Timesteps | Avg Score | Avg Survival(frames) | Key behavior |
+| :--- | :--- | :--- | :--- | :--- |
+| **Random Policy** | N/A | 2.5 | 50 | n/a |
+| **Baseline** | 1M | 14.2 | 110 | Static firing. |
+| **Stacked** | 1M | 26.5 | 195 | Active dodging, predicts bullet paths. |
+| **Stacked + Tuned** | 1M | 42.95 | 324 | Left, right, fire, right+fire, more variety of actions |
+
+![DQN ep_rew_mean plot](assets/final/dqnFinal.png)
+
+---
 
 In this section, we evaluate our PPO implementation through two main experiments: training dynamics across multiple configurations and a component-level ablation study.
 
