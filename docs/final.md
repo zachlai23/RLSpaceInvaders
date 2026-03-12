@@ -22,6 +22,7 @@ Deep Q-Network(DQN) is a model-free, value-based reinforcement learning algorith
 Loss function: $$\mathcal{L}_\theta = (r + \gamma \max_{a'} Q_{\bar{\theta}}(s', a') - Q_\theta(s, a))^2$$
 
 In the MinAtar environment, the agent receives a reward of +1 for every opponent destroyed, and there are no negative rewards. The model uses a discrete action space with 6 possible outputs corresponding to moving and shooting. The MinAtar environment suffers from partial observability, where the model cannot interpret the direction of a moving object since it is shown in a static frame. To combat this problem, we used temporal frame stacking, where groups of four frames are stacked together to give more context about the direction of the moving object. Frame stacking provided improved performance of the model, as it could determine whether bullets were moving at it or away from it.
+
 We chose to train the Stable-Baselines3 DQN model. We first trained DQN without adjusting any hyperparameters on runs of 100,000, 500,000, and 1,000,000 timesteps, comparing the results of using temporal frame stacking to the results without it.  To continue, we added similar hyperparameters to the MinAtar paper(Young, Tian, 2019), and tuned them iteratively on runs of 1,000,000 timesteps. Some significant hyperparameters that we tuned were the exploration fraction, learning rate, and target update interval.
 
 ### PPO Approach
