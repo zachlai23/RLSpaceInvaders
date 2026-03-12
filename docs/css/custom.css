@@ -451,6 +451,32 @@ blockquote {
   white-space: nowrap;
 }
 
+/* Tables */
+.main-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem 0;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.main-content table th,
+.main-content table td {
+  border: 1px solid var(--border-color);
+  padding: 0.65rem 0.9rem;
+  vertical-align: top;
+}
+
+.main-content table th {
+  background-color: var(--light-bg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.main-content table tr:nth-child(even) td {
+  background-color: #fafbfc;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .page-title {
