@@ -25,6 +25,18 @@ In the MinAtar environment, the agent receives a reward of +1 for every opponent
 
 We chose to train the Stable-Baselines3 DQN implementation. We first trained DQN without adjusting any hyperparameters on runs of 100,000, 500,000, and 1,000,000 timesteps, comparing the results of using temporal frame stacking to the results without it.  To continue, we added similar hyperparameters to the MinAtar paper(Young, Tian, 2019), and tuned them iteratively on runs of 1,000,000 timesteps. Some significant hyperparameters that we tuned were the exploration fraction, learning rate, and target update interval.
 
+### QRDQN
+
+The next algorithm we chose to investigate was Quantile Regression Deep Q-Network(QRDQN), as a version was available on Stable-Baselines3-contrib which kept consistent with our baseline DQN implementation. QRDQN is a distributional reinforcement learning algorithm that builds on top of DQN by using quantile regression to parametrize the return distribution, rather than estimating a single scalar mean. QR-DQN modifies the output layer of standard DQN to produce N quantile values per action, which helps account for uncertainty in the environment. Since it tracks the full distribution, the distributional approach helps avoid the overestimation problem that is a known weakness of DQN.
+
+Loss function: Quantile Huber Loss for a specific quantile &tau;:
+
+$$
+\rho_\tau^\kappa(u) = |\tau - \delta_{\{u < 0\}}| \mathcal{L}_\kappa(u)
+$$
+
+The QRDQN implementation used the same reward, action space and time step trials were used along with 4 frame temporal stacking. Again, we started evaluating no hyperparameters with and without temporal frame stacking. The same hyperparameter set as the DQN implementation was used to avoid changing too many variables, and to focus on comparing the algorithms themselves.
+
 ### PPO Approach
 
 For this project, we implemented the Proximal Policy Optimization (PPO) algorithm to train an agent in the MinAtar Space Invaders environment. We chose PPO because it is generally more stable and easier to tune than other policy gradient methods. The core of our approach relies on an Actor-Critic architecture that optimizes a "clipped" surrogate objective. This objective prevents the policy from changing too drastically in a single update, which helps keep the training stable.
@@ -65,6 +77,18 @@ The DQN agent with tuned hyperparameters and temporal frame stacking significant
 | **Stacked + Tuned** | 1M | 42.95 | 324 | Left, right, fire, right+fire, more variety of actions |
 
 ![DQN ep_rew_mean plot](assets/final/dqnFinal.png)
+
+### QRDQN
+
+When comparing the QRDQN average metrics from the 1,000,000 timestep trained agent across 20 games to the top DQN version, we observe that QRDQN significantly outperforms the average score and survival time. The learning curve shown in the graph is interesting, as we see the QRDQN on pace with DQN, but when DQN starts to plateau QRDQN continues to learn and ends with a higher performance.  Evaluating the results, we can conclude that QRDQN learning the full distribution of potential rewards helps the agent perform better in fast moving and complex environments like Space Invaders, compared to DQN estimating a single expected average.
+
+| Version | Timesteps | Avg Score | Avg Survival(frames) | Key Behavior |
+| :--- | :--- | :--- | :--- | :--- |
+| **Random Policy** | n/a | 2.5 | 50 | n/a |
+| **DQN** | 1M | 42.95 | 324 | Left, right, fire, right+fire |
+| **QRDQN** | 1M | 76.5 | 588 | Left, right, fire, left+fire, dodged bullets better, more accurate |
+
+![QRDQN ep_rew_mean plot](assets/final/qrdqnFinal.png)
 
 ---
 
