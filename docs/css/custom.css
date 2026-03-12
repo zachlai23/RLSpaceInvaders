@@ -447,8 +447,14 @@ blockquote {
 }
 
 .main-content img.img-fluid {
+  box-shadow: var(--shadow-sm);
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+.main-content img.img-fluid:hover {
   box-shadow: var(--shadow-lg);
-  border-radius: 12px;
+  transform: translateY(-2px);
 }
 
 .inline-formula {
