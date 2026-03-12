@@ -1,165 +1,292 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
-  <title id="title">AI agent and Space Invaders</title>
-  <desc id="desc">A stylized Space Invaders alien facing a simple neural network diagram.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 380" role="img" aria-labelledby="heroTitle heroDesc">
+  <title id="heroTitle">RL Agent playing MinAtar Space Invaders</title>
+  <desc id="heroDesc">A reinforcement learning training loop: the MinAtar game grid on the left feeds state into a neural network agent in the center, which outputs actions and receives a rising reward shown on the right.</desc>
+
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="0.55" stop-color="#1e1b4b"/>
-      <stop offset="1" stop-color="#3b0764"/>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#0f172a"/>
+      <stop offset="50%"  stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
     </linearGradient>
-    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#a5b4fc" stop-opacity="0.9"/>
-      <stop offset="1" stop-color="#f0abfc" stop-opacity="0.75"/>
+
+    <!-- Indigo glow for invaders -->
+    <radialGradient id="invaderGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6366f1" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Purple glow for network -->
+    <radialGradient id="netGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#8b5cf6" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Pink glow for reward -->
+    <radialGradient id="rewardGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ec4899" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Reward curve gradient fill -->
+    <linearGradient id="curveGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ec4899" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
     </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+
+    <!-- Node gradients -->
+    <radialGradient id="nodeIn" cx="40%" cy="35%" r="60%">
+      <stop offset="0%"   stop-color="#a5b4fc"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </radialGradient>
+    <radialGradient id="nodeHid" cx="40%" cy="35%" r="60%">
+      <stop offset="0%"   stop-color="#c4b5fd"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </radialGradient>
+    <radialGradient id="nodeOut" cx="40%" cy="35%" r="60%">
+      <stop offset="0%"   stop-color="#f9a8d4"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </radialGradient>
+
+    <!-- Soft blur filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <style>
-      .label { fill: rgba(255,255,255,0.86); font: 700 18px system-ui, -apple-system, Segoe UI, Inter, sans-serif; letter-spacing: 0.3px; }
-      .sub { fill: rgba(255,255,255,0.72); font: 500 14px system-ui, -apple-system, Segoe UI, Inter, sans-serif; }
-    </style>
+    <filter id="glowStrong" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Dot grid pattern -->
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="white" opacity="0.07"/>
+    </pattern>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="400" fill="url(#bg)"/>
-  <rect width="1200" height="400" fill="url(#grid)"/>
-  <circle cx="920" cy="85" r="190" fill="url(#glow)" opacity="0.10"/>
-  <circle cx="260" cy="320" r="240" fill="#22c55e" opacity="0.06"/>
+  <!-- ── Background ── -->
+  <rect width="1200" height="380" fill="url(#bgGrad)"/>
+  <rect width="1200" height="380" fill="url(#dots)"/>
 
-  <!-- Section titles -->
-  <text x="110" y="70" class="label">SPACE INVADERS</text>
-  <text x="790" y="70" class="label">AI AGENT</text>
-  <text x="110" y="95" class="sub">Pixel enemy patterns</text>
-  <text x="790" y="95" class="sub">Value / policy network</text>
+  <!-- Ambient glows -->
+  <ellipse cx="260" cy="190" rx="220" ry="180" fill="url(#invaderGlow)"/>
+  <ellipse cx="620" cy="190" rx="200" ry="170" fill="url(#netGlow)"/>
+  <ellipse cx="970" cy="190" rx="200" ry="170" fill="url(#rewardGlow)"/>
 
-  <!-- Pixel alien (left) -->
-  <g transform="translate(160 120)" filter="url(#softGlow)">
-    <g fill="#22c55e">
-      <!-- 12x12 grid pixels, each pixel is 18x18 -->
-      <!-- Row 1 -->
-      <rect x="72" y="0" width="18" height="18"/>
-      <rect x="90" y="0" width="18" height="18"/>
-      <rect x="108" y="0" width="18" height="18"/>
-      <rect x="126" y="0" width="18" height="18"/>
-      <!-- Row 2 -->
-      <rect x="54" y="18" width="18" height="18"/>
-      <rect x="72" y="18" width="18" height="18"/>
-      <rect x="90" y="18" width="18" height="18"/>
-      <rect x="108" y="18" width="18" height="18"/>
-      <rect x="126" y="18" width="18" height="18"/>
-      <rect x="144" y="18" width="18" height="18"/>
-      <!-- Row 3 -->
-      <rect x="36" y="36" width="18" height="18"/>
-      <rect x="54" y="36" width="18" height="18"/>
-      <rect x="72" y="36" width="18" height="18"/>
-      <rect x="90" y="36" width="18" height="18"/>
-      <rect x="108" y="36" width="18" height="18"/>
-      <rect x="126" y="36" width="18" height="18"/>
-      <rect x="144" y="36" width="18" height="18"/>
-      <rect x="162" y="36" width="18" height="18"/>
-      <!-- Row 4 (eyes) -->
-      <rect x="36" y="54" width="18" height="18"/>
-      <rect x="54" y="54" width="18" height="18"/>
-      <rect x="90" y="54" width="18" height="18"/>
-      <rect x="108" y="54" width="18" height="18"/>
-      <rect x="144" y="54" width="18" height="18"/>
-      <rect x="162" y="54" width="18" height="18"/>
-      <!-- Row 5 -->
-      <rect x="18" y="72" width="18" height="18"/>
-      <rect x="36" y="72" width="18" height="18"/>
-      <rect x="54" y="72" width="18" height="18"/>
-      <rect x="72" y="72" width="18" height="18"/>
-      <rect x="90" y="72" width="18" height="18"/>
-      <rect x="108" y="72" width="18" height="18"/>
-      <rect x="126" y="72" width="18" height="18"/>
-      <rect x="144" y="72" width="18" height="18"/>
-      <rect x="162" y="72" width="18" height="18"/>
-      <rect x="180" y="72" width="18" height="18"/>
-      <!-- Row 6 -->
-      <rect x="18" y="90" width="18" height="18"/>
-      <rect x="72" y="90" width="18" height="18"/>
-      <rect x="90" y="90" width="18" height="18"/>
-      <rect x="108" y="90" width="18" height="18"/>
-      <rect x="126" y="90" width="18" height="18"/>
-      <rect x="180" y="90" width="18" height="18"/>
-      <!-- Row 7 -->
-      <rect x="18" y="108" width="18" height="18"/>
-      <rect x="36" y="108" width="18" height="18"/>
-      <rect x="54" y="108" width="18" height="18"/>
-      <rect x="72" y="108" width="18" height="18"/>
-      <rect x="90" y="108" width="18" height="18"/>
-      <rect x="108" y="108" width="18" height="18"/>
-      <rect x="126" y="108" width="18" height="18"/>
-      <rect x="144" y="108" width="18" height="18"/>
-      <rect x="162" y="108" width="18" height="18"/>
-      <rect x="180" y="108" width="18" height="18"/>
-      <!-- Row 8 (legs) -->
-      <rect x="54" y="126" width="18" height="18"/>
-      <rect x="72" y="126" width="18" height="18"/>
-      <rect x="126" y="126" width="18" height="18"/>
-      <rect x="144" y="126" width="18" height="18"/>
-      <!-- Row 9 -->
-      <rect x="36" y="144" width="18" height="18"/>
-      <rect x="54" y="144" width="18" height="18"/>
-      <rect x="72" y="144" width="18" height="18"/>
-      <rect x="90" y="144" width="18" height="18"/>
-      <rect x="108" y="144" width="18" height="18"/>
-      <rect x="126" y="144" width="18" height="18"/>
-      <rect x="144" y="144" width="18" height="18"/>
-      <rect x="162" y="144" width="18" height="18"/>
-    </g>
-    <g fill="rgba(15, 23, 42, 0.95)">
-      <rect x="72" y="54" width="18" height="18"/>
-      <rect x="126" y="54" width="18" height="18"/>
-    </g>
+  <!-- ══════════════════════════════════════
+       LEFT PANEL — MinAtar game grid
+       ══════════════════════════════════════ -->
+  <!-- Panel label -->
+  <text x="80" y="44" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600"
+        letter-spacing="2" fill="#a5b4fc" opacity="0.9">ENVIRONMENT</text>
+
+  <!-- 10×10 MinAtar grid  (each cell 22px, grid starts at x=80, y=60) -->
+  <!-- Grid border -->
+  <rect x="78" y="58" width="224" height="224" rx="4" fill="none"
+        stroke="#6366f1" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Grid lines -->
+  <g stroke="#6366f1" stroke-width="0.4" opacity="0.18">
+    <line x1="100" y1="58"  x2="100" y2="282"/> <line x1="122" y1="58"  x2="122" y2="282"/>
+    <line x1="144" y1="58"  x2="144" y2="282"/> <line x1="166" y1="58"  x2="166" y2="282"/>
+    <line x1="188" y1="58"  x2="188" y2="282"/> <line x1="210" y1="58"  x2="210" y2="282"/>
+    <line x1="232" y1="58"  x2="232" y2="282"/> <line x1="254" y1="58"  x2="254" y2="282"/>
+    <line x1="276" y1="58"  x2="276" y2="282"/>
+    <line x1="78"  y1="80"  x2="302" y2="80"/>  <line x1="78"  y1="102" x2="302" y2="102"/>
+    <line x1="78"  y1="124" x2="302" y2="124"/> <line x1="78"  y1="146" x2="302" y2="146"/>
+    <line x1="78"  y1="168" x2="302" y2="168"/> <line x1="78"  y1="190" x2="302" y2="190"/>
+    <line x1="78"  y1="212" x2="302" y2="212"/> <line x1="78"  y1="234" x2="302" y2="234"/>
+    <line x1="78"  y1="256" x2="302" y2="256"/>
   </g>
 
-  <!-- Neural network (right) -->
-  <g transform="translate(690 120)" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="2">
-    <!-- connections -->
-    <path d="M80 40 C150 40 150 40 220 40"/>
-    <path d="M80 40 C150 75 150 75 220 110"/>
-    <path d="M80 40 C150 120 150 120 220 180"/>
-
-    <path d="M80 110 C150 40 150 40 220 40"/>
-    <path d="M80 110 C150 75 150 75 220 110"/>
-    <path d="M80 110 C150 120 150 120 220 180"/>
-
-    <path d="M80 180 C150 40 150 40 220 40"/>
-    <path d="M80 180 C150 75 150 75 220 110"/>
-    <path d="M80 180 C150 120 150 120 220 180"/>
-
-    <!-- output arrow -->
-    <path d="M245 110 C305 110 330 110 390 110" stroke="rgba(255,255,255,0.65)"/>
-    <path d="M390 110 l-12 -8 m12 8 l-12 8" stroke="rgba(255,255,255,0.65)" stroke-linecap="round"/>
-
-    <!-- nodes -->
-    <g fill="#a5b4fc" stroke="rgba(255,255,255,0.8)" filter="url(#softGlow)">
-      <!-- input layer -->
-      <circle cx="80" cy="40" r="14"/>
-      <circle cx="80" cy="110" r="14"/>
-      <circle cx="80" cy="180" r="14"/>
-      <!-- hidden layer -->
-      <circle cx="220" cy="40" r="14"/>
-      <circle cx="220" cy="110" r="14"/>
-      <circle cx="220" cy="180" r="14"/>
-      <!-- output layer -->
-      <circle cx="410" cy="110" r="16" fill="#f0abfc"/>
-    </g>
-    <text x="432" y="116" class="sub" fill="rgba(255,255,255,0.82)" stroke="none">action</text>
+  <!-- Invader row 1 (indigo) — row 1, cols 1,3,5,7,9 -->
+  <g fill="#6366f1" filter="url(#glow)">
+    <rect x="100" y="80"  width="18" height="18" rx="2"/>
+    <rect x="144" y="80"  width="18" height="18" rx="2"/>
+    <rect x="188" y="80"  width="18" height="18" rx="2"/>
+    <rect x="232" y="80"  width="18" height="18" rx="2"/>
+    <rect x="276" y="80"  width="18" height="18" rx="2"/>
+  </g>
+  <!-- Invader row 2 (slightly lighter) — row 2, cols 0,2,4,6,8 -->
+  <g fill="#818cf8" filter="url(#glow)">
+    <rect x="78"  y="102" width="18" height="18" rx="2"/>
+    <rect x="122" y="102" width="18" height="18" rx="2"/>
+    <rect x="166" y="102" width="18" height="18" rx="2"/>
+    <rect x="210" y="102" width="18" height="18" rx="2"/>
+    <rect x="254" y="102" width="18" height="18" rx="2"/>
+  </g>
+  <!-- Invader row 3 — row 3, cols 1,3,5,7,9 -->
+  <g fill="#6366f1" opacity="0.7">
+    <rect x="100" y="124" width="18" height="18" rx="2"/>
+    <rect x="144" y="124" width="18" height="18" rx="2"/>
+    <rect x="188" y="124" width="18" height="18" rx="2"/>
+    <rect x="232" y="124" width="18" height="18" rx="2"/>
+    <rect x="276" y="124" width="18" height="18" rx="2"/>
   </g>
 
-  <!-- Center hint -->
-  <g opacity="0.8">
-    <path d="M520 200 C565 140 635 140 680 200" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
-    <circle cx="600" cy="200" r="3" fill="rgba(255,255,255,0.55)"/>
-    <text x="515" y="250" class="sub" fill="rgba(255,255,255,0.70)">learn a policy to dodge + shoot</text>
+  <!-- Enemy bullet (falling, col 5) -->
+  <rect x="190" y="148" width="6" height="14" rx="3" fill="#ec4899" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Shield blocks — row 7 -->
+  <g fill="#4f46e5" opacity="0.6">
+    <rect x="100" y="212" width="18" height="18" rx="2"/>
+    <rect x="122" y="212" width="18" height="18" rx="2"/>
+    <rect x="188" y="212" width="18" height="18" rx="2"/>
+    <rect x="210" y="212" width="18" height="18" rx="2"/>
+    <rect x="254" y="212" width="18" height="18" rx="2"/>
+    <rect x="276" y="212" width="18" height="18" rx="2"/>
   </g>
+
+  <!-- Player ship — row 9, col 4  (accent pink) -->
+  <g fill="#ec4899" filter="url(#glowStrong)">
+    <rect x="166" y="256" width="22" height="8"  rx="2"/>
+    <rect x="174" y="248" width="6"  height="10" rx="2"/>
+  </g>
+  <!-- Player bullet -->
+  <rect x="174.5" y="234" width="5" height="14" rx="2.5" fill="#f9a8d4" filter="url(#glow)" opacity="0.95"/>
+
+  <!-- Score label -->
+  <text x="82" y="303" font-family="'Space Mono',monospace" font-size="10" fill="#a5b4fc" opacity="0.7">SCORE</text>
+  <text x="130" y="303" font-family="'Space Mono',monospace" font-size="10" fill="#e0e7ff" opacity="0.9">0480</text>
+  <text x="190" y="303" font-family="'Space Mono',monospace" font-size="10" fill="#a5b4fc" opacity="0.7">STEP</text>
+  <text x="225" y="303" font-family="'Space Mono',monospace" font-size="10" fill="#e0e7ff" opacity="0.9">12,847</text>
+
+
+  <!-- ══════════════════════════════════════
+       CENTER PANEL — PPO Agent network
+       ══════════════════════════════════════ -->
+  <text x="417" y="44" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600"
+        letter-spacing="2" fill="#c4b5fd" opacity="0.9">PPO AGENT</text>
+
+  <!-- Flow arrow: grid → network -->
+  <g stroke="#6366f1" stroke-width="1.5" fill="none" opacity="0.6" stroke-dasharray="5 3">
+    <path d="M305 155 Q360 155 390 155"/>
+  </g>
+  <polygon points="390,149 402,155 390,161" fill="#6366f1" opacity="0.7"/>
+  <text x="316" y="149" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#a5b4fc" opacity="0.8">state</text>
+
+  <!-- Network connections (input→hidden) -->
+  <g stroke="rgba(165,180,252,0.25)" stroke-width="1.2" fill="none">
+    <line x1="430" y1="110" x2="540" y2="100"/>
+    <line x1="430" y1="110" x2="540" y2="155"/>
+    <line x1="430" y1="110" x2="540" y2="210"/>
+    <line x1="430" y1="155" x2="540" y2="100"/>
+    <line x1="430" y1="155" x2="540" y2="155"/>
+    <line x1="430" y1="155" x2="540" y2="210"/>
+    <line x1="430" y1="200" x2="540" y2="100"/>
+    <line x1="430" y1="200" x2="540" y2="155"/>
+    <line x1="430" y1="200" x2="540" y2="210"/>
+    <line x1="430" y1="245" x2="540" y2="100"/>
+    <line x1="430" y1="245" x2="540" y2="155"/>
+    <line x1="430" y1="245" x2="540" y2="210"/>
+  </g>
+  <!-- Network connections (hidden→output) -->
+  <g stroke="rgba(196,181,253,0.22)" stroke-width="1.2" fill="none">
+    <line x1="540" y1="100" x2="650" y2="125"/>
+    <line x1="540" y1="100" x2="650" y2="185"/>
+    <line x1="540" y1="155" x2="650" y2="125"/>
+    <line x1="540" y1="155" x2="650" y2="185"/>
+    <line x1="540" y1="210" x2="650" y2="125"/>
+    <line x1="540" y1="210" x2="650" y2="185"/>
+  </g>
+
+  <!-- Input nodes (4) -->
+  <g filter="url(#glow)">
+    <circle cx="430" cy="110" r="13" fill="url(#nodeIn)" stroke="#a5b4fc" stroke-width="1"/>
+    <circle cx="430" cy="155" r="13" fill="url(#nodeIn)" stroke="#a5b4fc" stroke-width="1"/>
+    <circle cx="430" cy="200" r="13" fill="url(#nodeIn)" stroke="#a5b4fc" stroke-width="1"/>
+    <circle cx="430" cy="245" r="13" fill="url(#nodeIn)" stroke="#a5b4fc" stroke-width="1"/>
+  </g>
+  <!-- Hidden nodes (3) -->
+  <g filter="url(#glow)">
+    <circle cx="540" cy="100" r="13" fill="url(#nodeHid)" stroke="#c4b5fd" stroke-width="1"/>
+    <circle cx="540" cy="155" r="13" fill="url(#nodeHid)" stroke="#c4b5fd" stroke-width="1"/>
+    <circle cx="540" cy="210" r="13" fill="url(#nodeHid)" stroke="#c4b5fd" stroke-width="1"/>
+  </g>
+  <!-- Output nodes: policy + value -->
+  <g filter="url(#glowStrong)">
+    <circle cx="650" cy="125" r="15" fill="url(#nodeOut)" stroke="#f9a8d4" stroke-width="1.5"/>
+    <circle cx="650" cy="185" r="15" fill="url(#nodeOut)" stroke="#f9a8d4" stroke-width="1.5"/>
+  </g>
+
+  <!-- Layer labels -->
+  <text x="430" y="278" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#a5b4fc" opacity="0.65">input</text>
+  <text x="540" y="238" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#c4b5fd" opacity="0.65">hidden</text>
+  <text x="650" y="215" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#f9a8d4" opacity="0.65">output</text>
+
+  <!-- π / V labels on output nodes -->
+  <text x="650" y="130" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" fill="white" opacity="0.9">π</text>
+  <text x="650" y="190" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="700" fill="white" opacity="0.9">V</text>
+
+  <!-- Flow arrow: network → action -->
+  <g stroke="#ec4899" stroke-width="1.5" fill="none" opacity="0.65" stroke-dasharray="5 3">
+    <path d="M668 155 Q720 155 740 155"/>
+  </g>
+  <polygon points="740,149 752,155 740,161" fill="#ec4899" opacity="0.7"/>
+  <text x="670" y="147" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#f9a8d4" opacity="0.8">action</text>
+
+  <!-- Clip ε label -->
+  <text x="490" y="44" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#c4b5fd" opacity="0.0">.</text>
+  <text x="492" y="318" font-family="'Space Mono',monospace" font-size="9" fill="#c4b5fd" opacity="0.6">clip ε = 0.2  |  γ = 0.99  |  λ = 0.95</text>
+
+
+  <!-- ══════════════════════════════════════
+       RIGHT PANEL — Reward curve
+       ══════════════════════════════════════ -->
+  <text x="800" y="44" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="600"
+        letter-spacing="2" fill="#f9a8d4" opacity="0.9">TRAINING REWARD</text>
+
+  <!-- Axes -->
+  <line x1="800" y1="60" x2="800" y2="290" stroke="#f9a8d4" stroke-width="1" opacity="0.3"/>
+  <line x1="800" y1="290" x2="1140" y2="290" stroke="#f9a8d4" stroke-width="1" opacity="0.3"/>
+
+  <!-- Y-axis ticks + labels -->
+  <g font-family="'Space Mono',monospace" font-size="9" fill="#f9a8d4" opacity="0.5" text-anchor="end">
+    <text x="795" y="293">0</text>
+    <text x="795" y="243">20</text>
+    <text x="795" y="193">40</text>
+    <text x="795" y="143">60</text>
+    <text x="795" y="93">80</text>
+    <line x1="797" y1="240" x2="803" y2="240" stroke="#f9a8d4" stroke-width="0.8" opacity="0.4"/>
+    <line x1="797" y1="190" x2="803" y2="190" stroke="#f9a8d4" stroke-width="0.8" opacity="0.4"/>
+    <line x1="797" y1="140" x2="803" y2="140" stroke="#f9a8d4" stroke-width="0.8" opacity="0.4"/>
+    <line x1="797" y1="90"  x2="803" y2="90"  stroke="#f9a8d4" stroke-width="0.8" opacity="0.4"/>
+  </g>
+
+  <!-- X-axis label -->
+  <text x="970" y="308" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9"
+        fill="#f9a8d4" opacity="0.5">training steps (×10⁶)</text>
+
+  <!-- Shaded area under reward curve -->
+  <path d="M800,290 L820,285 L850,278 L890,265 L930,248 L970,224 L1010,200 L1050,174 L1090,148 L1120,118 L1140,100 L1140,290 Z"
+        fill="url(#curveGrad)" opacity="0.5"/>
+
+  <!-- Noisy background traces (variance band) -->
+  <path d="M800,290 L820,282 L850,272 L890,258 L930,238 L970,210 L1010,184 L1050,158 L1090,128 L1120,102 L1140,86"
+        fill="none" stroke="#ec4899" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.25"/>
+  <path d="M800,290 L820,288 L850,284 L890,272 L930,258 L970,238 L1010,216 L1050,190 L1090,168 L1120,134 L1140,114"
+        fill="none" stroke="#ec4899" stroke-width="0.8" stroke-dasharray="2 2" opacity="0.25"/>
+
+  <!-- Main reward curve -->
+  <path d="M800,290 L820,284 L850,275 L890,261 L930,243 L970,219 L1010,193 L1050,167 L1090,138 L1120,110 L1140,94"
+        fill="none" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+        filter="url(#glow)"/>
+
+  <!-- Endpoint dot -->
+  <circle cx="1140" cy="94" r="5" fill="#f9a8d4" filter="url(#glowStrong)"/>
+
+  <!-- Convergence annotation -->
+  <line x1="1140" y1="94" x2="1140" y2="74" stroke="#f9a8d4" stroke-width="1" opacity="0.5" stroke-dasharray="3 2"/>
+  <text x="1138" y="68" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="9" fill="#f9a8d4" opacity="0.8">≈73 avg</text>
+
+  <!-- Algorithm badges -->
+  <rect x="810" y="68" width="64" height="18" rx="9" fill="#6366f1" opacity="0.25"/>
+  <text x="842" y="81" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="600" fill="#a5b4fc">PPO</text>
+
+  <rect x="884" y="68" width="64" height="18" rx="9" fill="#8b5cf6" opacity="0.25"/>
+  <text x="916" y="81" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="600" fill="#c4b5fd">QR-DQN</text>
+
+  <rect x="958" y="68" width="80" height="18" rx="9" fill="#ec4899" opacity="0.25"/>
+  <text x="998" y="81" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="600" fill="#f9a8d4">Rainbow</text>
+
 </svg>
