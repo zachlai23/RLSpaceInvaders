@@ -40,7 +40,7 @@ Inspired by recent reinforcement learning research emphasizing system-level expe
 
 The reinforcement learning agent is trained using the Proximal Policy Optimization (PPO) algorithm. PPO updates the policy by maximizing a clipped surrogate objective to stabilize training and improve sample efficiency. The policy objective is defined as:
 
-![PPO clipped objective](assets/status/image1.png)
+$$L^{CLIP}(\theta) = \mathbb{E}_t\left[\min\left(r_t(\theta)A_t,\ \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)A_t\right)\right]$$
 
 where <span class="inline-formula">r<sub>t</sub>(&theta;) = &pi;<sub>&theta;</sub>(a<sub>t</sub> | s<sub>t</sub>) / &pi;<sub>&theta;old</sub>(a<sub>t</sub> | s<sub>t</sub>)</span> is the probability ratio and A<sub>t</sub> is the advantage estimate computed using Generalized Advantage Estimation (GAE). The total loss combines policy loss, value function loss, and entropy regularization to balance performance and exploration.
 
@@ -113,7 +113,12 @@ Results show that Frame Stack = 4 achieves significantly higher peak reward, fas
 
 ![Frame stacking ablation plots](assets/status/image2.png)
 
-![Quantitative performance summary table](assets/status/image3.png)
+**Quantitative Performance Summary**
+
+| Metric | Stack Size = 1 | Stack Size = 4 | Relative Change |
+| :--- | :---: | :---: | :---: |
+| Peak Reward | 23 | 64 | +178% |
+| Final Avg Reward | 6.96 | 12.16 | +74% |
 
 These results suggest that temporal information plays an important role in stabilizing policy learning and improving performance in dynamic environments.
 
