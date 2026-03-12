@@ -10,28 +10,25 @@ We are a team of dedicated students working on this reinforcement learning proje
 <div class="row mt-5">
   <div class="col-12 mb-4">
     <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">👨‍💻 Brian Byunghyun Kim</h5>
-        <p class="text-muted mb-2"><strong>UCI Net ID:</strong> bkim3164</p>
-        <p class="card-text">Team member</p>
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">👨‍💻 Brian Byunghyun Kim</h5>
+        <h5 class="text-muted mb-0">bkim3164</h5>
       </div>
     </div>
   </div>
   <div class="col-12 mb-4">
     <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">👨‍💻 Zachary Ian Lai</h5>
-        <p class="text-muted mb-2"><strong>UCI Net ID:</strong> zilai</p>
-        <p class="card-text">Team member</p>
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">👨‍💻 Zachary Ian Lai</h5>
+        <h5 class="text-muted mb-0">zilai</h5>
       </div>
     </div>
   </div>
   <div class="col-12 mb-4">
     <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">👨‍💻 Zongze Li</h5>
-        <p class="text-muted mb-2"><strong>UCI Net ID:</strong> zongzel3</p>
-        <p class="card-text">Team member</p>
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">👨‍💻 Zongze Li</h5>
+        <h5 class="text-muted mb-0">zongzel3</h5>
       </div>
     </div>
   </div>
