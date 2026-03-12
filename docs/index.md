@@ -22,9 +22,9 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       <div class="card-header">
         <h5 class="mb-0">📋 Proposal</h5>
       </div>
-      <div class="card-body">
+      <div class="card-body d-flex flex-column align-items-start">
         <p>Learn about our project goals, methodology, and evaluation plan.</p>
-        <a href="{{ '/proposal.html' | relative_url }}" class="btn btn-primary btn-sm">Read Proposal →</a>
+        <a href="{{ '/proposal.html' | relative_url }}" class="btn btn-primary btn-sm mt-auto">Read Proposal →</a>
       </div>
     </div>
   </div>
@@ -33,9 +33,9 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       <div class="card-header">
         <h5 class="mb-0">📊 Status</h5>
       </div>
-      <div class="card-body">
+      <div class="card-body d-flex flex-column align-items-start">
         <p>Check out our current progress and project milestones.</p>
-        <a href="{{ '/status.html' | relative_url }}" class="btn btn-primary btn-sm">View Status →</a>
+        <a href="{{ '/status.html' | relative_url }}" class="btn btn-primary btn-sm mt-auto">View Status →</a>
       </div>
     </div>
   </div>
@@ -44,9 +44,9 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       <div class="card-header">
         <h5 class="mb-0">🎯 Final Report</h5>
       </div>
-      <div class="card-body">
+      <div class="card-body d-flex flex-column align-items-start">
         <p>See our final results and conclusions.</p>
-        <a href="{{ '/final.html' | relative_url }}" class="btn btn-primary btn-sm">Read Final Report →</a>
+        <a href="{{ '/final.html' | relative_url }}" class="btn btn-primary btn-sm mt-auto">Read Final Report →</a>
       </div>
     </div>
   </div>
