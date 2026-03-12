@@ -54,11 +54,12 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
 
 ## What's New
 
-The [Status page]({{ '/status.html' | relative_url }}) has just been updated with a new status report.
+The [Final Report]({{ '/final.html' | relative_url }}) has just been published.
 
-- Added a full multi-algorithm report covering DQN, QRDQN, PPO, and Rainbow DQN.
-- Included updated evaluation results with performance tables, learning-curve visuals, and baseline comparisons.
-- Added a clearer section on remaining goals, expected challenges, resources used, and a project video summary.
+- Added a full PPO approach section covering the clipped surrogate objective and Generalized Advantage Estimation (GAE).
+- Included PPO training dynamics analysis across four experimental configurations with quantitative results and hyperparameter tables.
+- Added a PPO component ablation study examining the effects of removing FrameStack, GAE, and learning-rate decay.
+- Included a final cross-algorithm performance comparison of PPO, DQN, QR-DQN, and Rainbow DQN in the MinAtar Space Invaders environment.
 
 <video controls width="100%">
   <source src="assets/status/RLSpaceInvaders%20Progress%20Report.mp4" type="video/mp4">
