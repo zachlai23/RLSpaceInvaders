@@ -485,10 +485,17 @@ blockquote {
   color: var(--text-secondary);
 }
 
-/* MathJax formulas */
+/* MathJax formulas — target container and all inner rendered elements */
 .main-content .MathJax,
+.main-content .MathJax *,
 .main-content .MathJax_Display,
-.main-content .MathJax_Preview {
+.main-content .MathJax_Display *,
+.main-content .MathJax_Preview,
+.main-content .MathJax_Preview *,
+.main-content .mjx-chtml,
+.main-content .mjx-chtml *,
+.main-content .MJXc-display,
+.main-content .MJXc-display * {
   color: var(--text-secondary) !important;
 }
 
