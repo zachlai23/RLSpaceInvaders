@@ -21,9 +21,9 @@ For this project, we implemented the Proximal Policy Optimization (PPO) algorith
 
 Following the work of Schulman et al. (2017), the loss function we optimized is:
 
-![PPO clipped objective loss function](assets/final/image2.png)
+$$L^{CLIP}(\theta) = \mathbb{E}_t\left[\min\left(r_t(\theta)\hat{A}_t,\ \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t\right)\right]$$
 
-![PPO GAE formula](assets/final/image3.png)
+$$\hat{A}_t^{GAE(\gamma,\lambda)} = \sum_{l=0}^{\infty}(\gamma\lambda)^l\delta_{t+l}$$
 
 where **r<sub>t</sub>(θ)** is the probability ratio between the new and old policies, and **ε** is the clipping hyperparameter (set to 0.2 in the baseline). To estimate the advantage **Â<sub>t</sub>**, we used Generalized Advantage Estimation (GAE), which was introduced by Schulman et al. (2015) to balance bias and variance in policy gradients.
 
