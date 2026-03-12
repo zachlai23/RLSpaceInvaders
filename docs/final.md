@@ -5,11 +5,17 @@ title: Final
 
 # Final Report
 
-## Part 1: Project Report
+## Video
 
-### 3. Approach
+*Coming Soon*
 
-#### PPO Approach
+## Project Summary
+
+*Coming Soon*
+
+## Approach
+
+### PPO Approach
 
 For this project, we implemented the Proximal Policy Optimization (PPO) algorithm to train an agent in the MinAtar Space Invaders environment. We chose PPO because it is generally more stable and easier to tune than other policy gradient methods. The core of our approach relies on an Actor-Critic architecture that optimizes a "clipped" surrogate objective. This objective prevents the policy from changing too drastically in a single update, which helps keep the training stable.
 
@@ -29,15 +35,15 @@ To study how different design choices affect PPO training behavior, we evaluated
 
 ---
 
-### Evaluation
+## Evaluation
 
 In this section, we evaluate our PPO implementation through two main experiments: training dynamics across multiple configurations and a component-level ablation study.
 
-#### 1. PPO Training Dynamics
+### PPO Training Dynamics
 
 Unlike the final cross-algorithm comparison, this PPO analysis focuses on the training dynamics within the MinAtar 10×10 environment. Therefore, the x-axis is expressed in training iterations, which more clearly illustrates policy updates and protocol adjustments during development.
 
-##### Quantitative Results
+#### Quantitative Results
 
 ![PPO training dynamics chart showing learning curves across configurations](assets/final/image4.png)
 
@@ -45,17 +51,17 @@ To better contextualize these learning curves, Table 1 summarizes the key hyperp
 
 ![Table 1: Hyperparameter configurations for each PPO variant](assets/final/image5.png)
 
-##### Qualitative Results
+#### Qualitative Results
 
 The PPO agent was developed through an iterative optimization process. The **baseline PPO (cyan line)** initially improved but quickly showed **early convergence**, indicating limited exploration. To accelerate learning, an **annealing protocol (magenta line)** was introduced, but the agent soon experienced **training stagnation**, suggesting that the aggressive decay restricted further policy improvement. To address early deaths in the environment, a **survival incentive (yellow line)** was added, which increased episode length but led to a **survival trap**, where the agent prioritized staying alive over scoring. Finally, the **Apex protocol (green line)** removed the survival bias and restored a balanced reward structure, producing the most **stable and higher-performing policy**. This iterative process allowed the PPO agent to progressively diagnose and correct training behaviors, ultimately leading to a robust final configuration.
 
 ---
 
-#### 2. PPO Component Ablation Study
+### PPO Component Ablation Study
 
 To better understand the contribution of individual components in our PPO implementation, we conducted an ablation study by systematically removing several key elements from the baseline configuration.
 
-##### Quantitative Results
+#### Quantitative Results
 
 ![PPO component ablation study chart](assets/final/image6.png)
 
@@ -63,7 +69,7 @@ To provide clarity on the experimental setup, the specific hyperparameter modifi
 
 ![Table 2: Hyperparameter modifications for each ablation configuration](assets/final/image7.png)
 
-##### Qualitative Results
+#### Qualitative Results
 
 To understand the contribution of key components in PPO, we conducted an ablation study where one component was removed at a time while keeping the rest of the training setup unchanged. Figure 2 compares the baseline PPO with three variants: without FrameStack, without GAE, and without learning-rate decay. The baseline model shows the most stable learning curve and achieves the highest mean episode reward.
 
@@ -89,41 +95,41 @@ Overall, the results highlight an important trade-off between learning stability
 
 ---
 
-### 5. Resources Used
+## Resources Used
 
-#### Reinforcement Learning Libraries
+### Reinforcement Learning Libraries
 
 - **PyTorch** — used to implement the PPO neural network, policy updates, and training pipeline.
 - **NumPy** — used for numerical operations during training and data processing.
 
-#### Environment and Benchmark
+### Environment and Benchmark
 
 - **MinAtar Environment** (Young & Tian, 2019) — used as the experimental environment for the Space Invaders task.
 - **OpenAI Gym-style interface** — used to interact with the environment and run training episodes.
 
-#### Development Tools
+### Development Tools
 
 - Python 3.13
 - **Visual Studio Code** — used for implementing, debugging, and running PPO experiments.
 - **Matplotlib** — used to generate training curves and comparison plots.
 
-#### Algorithm References
+### Algorithm References
 
 - Schulman et al., 2017 (PPO Paper) — main reference for implementing the clipped PPO objective.
 - Schulman et al., 2015 (GAE) — reference for implementing Generalized Advantage Estimation.
 
-#### Online Documentation
+### Online Documentation
 
 - PyTorch Documentation
 - MinAtar GitHub Repository
 - OpenAI Gym Documentation
 
-#### Data Visualization Tools
+### Data Visualization Tools
 
 - **Matplotlib** — used to generate reward curves and algorithm comparison figures.
 - Python plotting scripts — used to visualize PPO training dynamics and ablation results.
 
-#### Use of AI Tools
+### Use of AI Tools
 
 - ChatGPT (OpenAI) was used as a support tool for discussion and clarification of reinforcement learning concepts (e.g., PPO training dynamics and experiment design).
 - It was also used for minor editing and language polishing of written explanations in the report.
