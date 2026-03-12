@@ -46,7 +46,7 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
       </div>
       <div class="card-body">
         <p>See our final results and conclusions.</p>
-        <span class="btn btn-secondary btn-sm disabled" aria-disabled="true">Coming Soon</span>
+        <a href="{{ '/final.html' | relative_url }}" class="btn btn-primary btn-sm">Read Final Report →</a>
       </div>
     </div>
   </div>
