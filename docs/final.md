@@ -49,7 +49,14 @@ Unlike the final cross-algorithm comparison, this PPO analysis focuses on the tr
 
 To better contextualize these learning curves, Table 1 summarizes the key hyperparameters used in each experimental configuration:
 
-![Table 1: Hyperparameter configurations for each PPO variant](assets/final/image5.png)
+**Table 1. PPO Experimental Configurations and Performance Summary for Figure 1**
+
+| Exp ID | Protocol | Iterations | LR Schedule | Entropy / Regularization | Architecture & Environment | Result (Peak / Mean) & Diagnosis |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **#8000** | Baseline (Dual Decay) | 10,000 | Linear decay 3e-4 → 5e-5 | Entropy decay 0.01 → 0.001 | Pure environment rewards; standard initialization; 1 action per frame | Peak: 213.0 / Mean: 56.98 — High potential but unstable late-stage variance |
+| **#8500** | OpenAI Protocol | 10,000 | Linear decay to zero | Clip annealing → 0 | Strict mimicry of long-horizon Atari parameters | Peak: 118.0 / Mean: 35.54 — Early convergence; exploration suppressed |
+| **#8900** | Genesis (Reward Shaping) | 20,000 | 2.5e-4 → 1e-5 | Fixed entropy = 0.01 | Ortho-init + Frame Skip (4×) + Survival bonus | Peak: 46.4 / Mean: 24.25 — Survival trap; policy plateau |
+| **#9000** | Apex (DNA Repaired) | 20,000 | Pure #8000 decay | Pure #8000 decay | Ortho-init + Frame Skip (4×); no survival bonus | Peak: 61.0 / Mean: 33.51 — Micro-control failure in 10×10 grid |
 
 #### Qualitative Results
 
@@ -67,7 +74,14 @@ To better understand the contribution of individual components in our PPO implem
 
 To provide clarity on the experimental setup, the specific hyperparameter modifications used in each ablation configuration are summarized in Table 2.
 
-![Table 2: Hyperparameter modifications for each ablation configuration](assets/final/image7.png)
+**Table 2. PPO Component Ablation Design and Observed Learning Effects**
+
+| Curve | Configuration | Component Removed | Key Setting | Observed Effect |
+| :--- | :--- | :--- | :--- | :--- |
+| 🔴 | PPO-Full (Baseline) | None | GAE (λ = 0.95), FrameStack (k = 4), Linear LR Decay | Stable learning progression and highest final reward. Provides balanced variance reduction and temporal perception. |
+| 🔵 | PPO w/o FrameStack | Temporal Context | FrameStack removed (k = 1) | Performance consistently lower. Lack of temporal information limits the agent's ability to infer invader motion, leading to reduced policy quality. |
+| 🟡 | PPO w/o GAE | Advantage Estimation | GAE disabled (λ = 0, equivalent to 1-step TD) | Fast early improvement but clear performance plateau. High variance in advantage estimates disrupts stable policy optimization. |
+| 🟢 | PPO w/o LR Decay | Optimization Scheduling | Constant learning rate (no decay) | Higher peak rewards but increased oscillation. Absence of decay leads to less stable convergence during later training stages. |
 
 #### Qualitative Results
 
@@ -83,7 +97,14 @@ To summarize the overall outcomes of our experiments, we compare the final perfo
 
 ![Final performance comparison chart across all algorithms](assets/final/image8.png)
 
-![Performance summary table](assets/final/image9.png)
+**Table 3. Final performance comparison of PPO, DQN, QRDQN and Rainbow DQN in the MinAtar Space Invaders environment.**
+
+| Algorithm | Final Avg Reward | Learning Stability | Sample Efficiency | Key Idea |
+| :--- | :---: | :--- | :--- | :--- |
+| **DQN** | 32 | Medium | Medium | Value-based Q-learning |
+| **QR-DQN** | 50 | Medium–High | High | Distributional Q-learning |
+| **Rainbow DQN** | 125 | High but unstable spikes | Very High | Multi-technique DQN variant |
+| **PPO** | 73 | High | Medium | Policy-gradient with Actor–Critic |
 
 ---
 
