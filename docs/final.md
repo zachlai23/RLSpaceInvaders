@@ -11,7 +11,9 @@ title: Final
 
 ## Project Summary
 
-*Coming Soon*
+Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. Rather than treating this as a one-off application, our project uses Space Invaders as a controlled testbed for comparing and understanding reinforcement learning (RL) methods.
+
+To make broad comparisons feasible, we will primarily use MinAtar SpaceInvaders through Gymnasium. MinAtar provides a simplified 10×10, channel-based observation space that trains much faster than full Atari, enabling us to run multiple seeds, hyperparameter sweeps, and component ablations within our compute budget. If time permits, we will validate key findings on the full ALE Space Invaders environment.
 
 ## Approach
 
