@@ -108,7 +108,7 @@ When comparing the QRDQN average metrics from the 1,000,000 timestep trained age
 
 To evaluate the performance of our Rainbow DQN agent, we tested 20 independent games at four training checkpoints (250k, 500k, 750k, and 1M frames), recording the score and survival length for each. We also tracked the training evaluation mean over the full 5,000,000-frame training run to observe long-term learning dynamics.
 
-At the 1M frame checkpoint, the agent averaged a score of 106.0 and a survival time of 818 frames across 20 games, already surpassing the best DQN performance. Notably, the agent exhibited high variance — some episodes produced scores as high as 237 while others ended quickly with scores near 22 — suggesting the agent had learned strong strategies in favorable configurations but remained sensitive to early-game difficulty. This bimodal behavior is characteristic of distributional methods, where the agent models the full return distribution and can commit aggressively to high-value action sequences.
+At the 1M frame checkpoint, the agent averaged a score of 106.0 and a survival time of 818 frames across 20 games, already surpassing the best DQN performance. Notably, the agent exhibited high variance. Some episodes produced scores as high as 237 while others ended quickly with scores near 22, suggesting the agent had learned strong strategies in favorable configurations but remained sensitive to early-game difficulty. This bimodal behavior is characteristic of distributional methods, where the agent models the full return distribution and can commit aggressively to high-value action sequences.
 
 The learning curve over the full 5M frame run shows a clear upward trend, with eval mean rising steeply in the first 1M frames and continuing to improve gradually thereafter. By 5M frames, the agent reached an evaluation mean of 292.0, demonstrating that Rainbow benefits significantly from extended training compared to DQN and QRDQN. The continuous improvement without a clear plateau suggests the distributional and noisy network components help the agent keep refining its policy rather than converging prematurely.
 
@@ -253,6 +253,7 @@ Overall, the results highlight an important trade-off between learning stability
 - ChatGPT (OpenAI) was used as a support tool for discussion and clarification of reinforcement learning concepts (e.g., PPO training dynamics and experiment design).
 - It was also used for minor editing and language polishing of written explanations in the report.
 - ChatGPT was used for coding assistance and debugging with the DQN and QRDQN implementation, testing, and recording.
+- Claude Code was used for assisting with the development of the Rainbow DQN.
 - AI tools were not used to generate the final PPO implementation, experimental code, or evaluation results.
 - All algorithm implementations, experiments, plots, and analysis were written and executed by the author.
 
