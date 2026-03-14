@@ -1,11 +1,36 @@
 import gymnasium as gym
 import numpy as np
+import torch as th
+import torch.nn as nn
 from pathlib import Path
 from gymnasium import spaces
 from stable_baselines3 import DQN
 from stable_baselines3.common.vec_env import DummyVecEnv, VecFrameStack
+from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from minatar import Environment
 from collections import Counter
+
+# Custom CNN
+class MinAtarCNN(BaseFeaturesExtractor):
+    def __init__(self, observation_space: gym.spaces.Box, features_dim: int = 128):
+        super().__init__(observation_space, features_dim)
+        n_input_channels = observation_space.shape[0]
+        self.cnn = nn.Sequential(
+            nn.Conv2d(n_input_channels, 16, kernel_size=3, stride=1, padding=0),
+            nn.ReLU(),
+            nn.Flatten()
+        )
+        with th.no_grad():
+            n_flatten = self.cnn(
+                th.as_tensor(observation_space.sample()[None]).float()
+            ).shape[1]
+        self.linear = nn.Sequential(
+            nn.Linear(n_flatten, features_dim),
+            nn.ReLU()
+        )
+    def forward(self, observations: th.Tensor) -> th.Tensor:
+        return self.linear(self.cnn(observations))
+
 
 class MinAtarLocalEnv(gym.Env):
     metadata = {"render_modes": ["rgb_array"]}
@@ -13,33 +38,41 @@ class MinAtarLocalEnv(gym.Env):
     def __init__(self, env_name="space_invaders"):
         self.game = Environment(env_name, sticky_action_prob=0.1, difficulty_ramping=True)
         self.action_space = spaces.Discrete(self.game.num_actions())
+        
+        # Transpose shape from (10, 10, 6) to (6, 10, 10) for PyTorch
+        shape = self.game.state_shape()
         self.observation_space = spaces.Box(
-            low=0, high=1, shape=self.game.state_shape(), dtype=np.float32
+            low=0.0, high=1.0, shape=(shape[2], shape[0], shape[1]), dtype=np.float32
         )
 
     def step(self, action):
         reward, terminated = self.game.act(action)
-        obs = self.game.state().astype(np.float32)
-        return obs, reward, terminated, False, {}
+        # Transpose state on every step
+        obs = np.transpose(self.game.state(), (2, 0, 1)).astype(np.float32)
+        truncated = False
+        return obs, reward, terminated, truncated, {}
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.game.reset()
-        return self.game.state().astype(np.float32), {}
+        # Transpose state on reset
+        obs = np.transpose(self.game.state(), (2, 0, 1)).astype(np.float32)
+        return obs, {}
 
 def main():
     root_dir = Path(__file__).resolve().parents[3]
     model_dir = root_dir / "dqn" / "models" / "stacked"
     
-    MODEL_NAME = "DQN_Stacked_Tuned_100k"
+    MODEL_NAME = "DQN_Stacked_Tuned_1mil3"
     MODEL_PATH = model_dir / MODEL_NAME
 
-    # Frame stacked environment (must match training setup)
+    # Frame stacked
     def make_env():
         return MinAtarLocalEnv("space_invaders")
     
     env = DummyVecEnv([make_env])
-    env = VecFrameStack(env, n_stack=4)
+    
+    env = VecFrameStack(env, n_stack=4, channels_order='first')
     
     print(f"Loading stacked model from: {MODEL_PATH}")
     try:
@@ -57,7 +90,6 @@ def main():
     print("-" * 45)
 
     for i in range(N_EPISODES):
-        # VecEnv reset returns only the observation array, not the info dict
         obs = env.reset() 
         done = False
         score = 0
@@ -66,11 +98,9 @@ def main():
         while not done:
             action, _ = model.predict(obs, deterministic=True)
             
-            # VecEnv returns an array of actions, so we take the first one: action[0]
             action_val = int(action[0])
             action_counts[action_val] += 1
             
-            # VecEnv step returns arrays for rewards and dones
             obs, rewards, dones, infos = env.step(action)
             
             done = dones[0]
@@ -96,7 +126,6 @@ def main():
     print(f"Avg Survival:    {np.mean(lengths):.1f} frames")
     print("-" * 45)
     print("Behavior (Action Distribution):")
-    # Show distribution for all 6 possible actions
     for act in range(6):
         count = action_counts.get(act, 0)
         pct = (count / total_actions) * 100
