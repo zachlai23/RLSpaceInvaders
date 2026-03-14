@@ -45,10 +45,10 @@ def main():
     model = DQN(
         "MlpPolicy",
         env,
-        learning_rate=5e-4,          
-        batch_size=128,               
+        learning_rate=2.5e-4,          
+        batch_size=32,               
         buffer_size=100_000,          
-        learning_starts=1000,         
+        learning_starts=5000,         
         target_update_interval=1000,  
         verbose=1,
         tensorboard_log=str(log_dir)
@@ -56,7 +56,7 @@ def main():
 
     print(f"Training {RUN_NAME} for {TIMESTEPS} steps...")
     
-    # Train with run name for tensorboard
+    # Train
     model.learn(total_timesteps=TIMESTEPS, tb_log_name=RUN_NAME) 
     
     # Save model
