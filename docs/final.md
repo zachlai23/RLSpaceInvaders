@@ -39,7 +39,7 @@ $$
 
 The QRDQN implementation used the same reward, action space and time step trials were used along with 4 frame temporal stacking. Again, we started evaluating no hyperparameters with and without temporal frame stacking. The same hyperparameter set as the DQN implementation was used to avoid changing too many variables, and to focus on comparing the algorithms themselves.
 
-### RainbowDQN
+### Rainbow DQN
 
 Rainbow DQN is a model-free, value-based reinforcement learning algorithm that extends the base DQN by combining six improvements into a single agent: Double DQN, Dueling Networks, Prioritized Experience Replay, Multi-step Returns, Distributional RL (C51), and Noisy Networks. Rainbow is a popular method for training video game agents and performs well in environments with large state spaces. Rather than introducing a fundamentally new algorithm, Rainbow demonstrates that these six components are complementary and jointly produce significantly better performance than any individual enhancement alone.
 
@@ -51,7 +51,7 @@ $$\mathcal{L}(\theta) = -\frac{1}{B}\sum_{i=1}^{B} w_i \sum_z m(z) \log p_\theta
 
 We applied Rainbow DQN to the MinAtar Space Invaders environment, training for 5,000,000 frames. The reward structure grants +1 for each enemy destroyed with no penalties, and the agent operates over a discrete action space of 6 moves corresponding to directional movement and shooting. Unlike standard DQN which uses a uniform replay buffer, Rainbow leverages a prioritized replay buffer of size 100,000 that samples transitions proportionally to their loss magnitude, controlled by a priority exponent of α = 0.5. This ensures the agent learns more frequently from surprising or high error experiences. Rather than bootstrapping from a single next step, 3-step returns are used to propagate reward signals further back through time, improving credit assignment. The important sampling exponent β is gradually annealed from 0.4 to 1.0 throughout training to correct for the sampling bias introduced by prioritization. The target network is synchronized with the online network via a hard update every 1,000 gradient steps, and all parameters are optimized using Adam with a learning rate of 1×10⁻⁴.
 
-### PPO Approach
+### PPO 
 
 For this project, we implemented the Proximal Policy Optimization (PPO) algorithm to train an agent in the MinAtar Space Invaders environment. We chose PPO because it is generally more stable and easier to tune than other policy gradient methods. The core of our approach relies on an Actor-Critic architecture that optimizes a "clipped" surrogate objective. This objective prevents the policy from changing too drastically in a single update, which helps keep the training stable.
 
@@ -103,6 +103,30 @@ When comparing the QRDQN average metrics from the 1,000,000 timestep trained age
 | **QRDQN** | 1M | 76.5 | 588 | Left, right, fire, left+fire, dodged bullets better, more accurate |
 
 ![QRDQN ep_rew_mean plot](assets/final/qrdqnFinal.png)
+
+### Rainbow DQN
+
+To evaluate the performance of our Rainbow DQN agent, we tested 20 independent games at four training checkpoints (250k, 500k, 750k, and 1M frames), recording the score and survival length for each. We also tracked the training evaluation mean over the full 5,000,000-frame training run to observe long-term learning dynamics.
+
+At the 1M frame checkpoint, the agent averaged a score of 106.0 and a survival time of 818 frames across 20 games, already surpassing the best DQN performance. Notably, the agent exhibited high variance — some episodes produced scores as high as 237 while others ended quickly with scores near 22 — suggesting the agent had learned strong strategies in favorable configurations but remained sensitive to early-game difficulty. This bimodal behavior is characteristic of distributional methods, where the agent models the full return distribution and can commit aggressively to high-value action sequences.
+
+The learning curve over the full 5M frame run shows a clear upward trend, with eval mean rising steeply in the first 1M frames and continuing to improve gradually thereafter. By 5M frames, the agent reached an evaluation mean of 292.0, demonstrating that Rainbow benefits significantly from extended training compared to DQN and QRDQN. The continuous improvement without a clear plateau suggests the distributional and noisy network components help the agent keep refining its policy rather than converging prematurely.
+
+Comparing Rainbow DQN to DQN and QRDQN at the 1M frame mark, Rainbow already outperforms DQN by a large margin. Its full 5M-frame performance far exceeds both prior methods, confirming that the combination of distributional RL, prioritized replay, multi-step returns, and noisy exploration produces substantially better agents in the stochastic, fast-moving MinAtar Space Invaders environment.
+
+| Version | Steps | Avg Score | Max Score | Min Score | Avg Survival | Key Behavior |
+|---------|-------|-----------|-----------|-----------|--------------|--------------|
+| Rainbow | 250k  | 74.8      | 167.0     | 7.0       | 635.9 frames | Right+Fire 58%, Left 21%, Fire 18% |
+| Rainbow | 500k  | 79.6      | 166.0     | 18.0      | 596.6 frames | Right+Fire 56%, Left 20%, Fire 18% |
+| Rainbow | 750k  | 94.0      | 236.0     | 7.0       | 693.0 frames | Right+Fire 48%, Left 21%, Fire 19% |
+| Rainbow | 1M    | 106.0     | 237.0     | 22.0      | 817.8 frames | Right+Fire 42%, Left 19%, Fire 17% |
+
+| Version | Frames | Avg Score | Avg Survival (frames) | Key Behavior |
+|:---|:---|:---|:---|:---|
+| **Rainbow DQN** | 1M | 106.0 | 818 | High variance, aggressive play, strong when alive |
+| **Rainbow DQN** | 5M | ~292.0 | — | Sustained improvement, highly refined policy |
+
+![Rainbow DQN ep_rew_mean plot](assets/status/RainbowDQNGraph.png)
 
 ---
 
