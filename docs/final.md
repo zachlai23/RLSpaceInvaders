@@ -126,7 +126,9 @@ Comparing Rainbow DQN to DQN and QRDQN at the 1M frame mark, Rainbow already out
 | **Rainbow DQN** | 1M | 106.0 | 818 | High variance, aggressive play, strong when alive |
 | **Rainbow DQN** | 5M | ~292.0 | — | Sustained improvement, highly refined policy |
 
-![Rainbow DQN ep_rew_mean plot](assets/status/RainbowDQNGraph.png)
+![Rainbow DQN 1mil ep_rew_mean plot](assets/status/RainbowDQNGraph.png)
+
+![Rainbow DQN 5mil ep_rew_mean plot](assets/final/learning_curve_rainbowdqn_5m.png)
 
 ---
 
