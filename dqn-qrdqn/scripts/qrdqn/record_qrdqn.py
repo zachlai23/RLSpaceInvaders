@@ -13,16 +13,19 @@ class MinAtarLocalEnv(gym.Env):
     def __init__(self, env_name="space_invaders"):
         self.game = Environment(env_name, sticky_action_prob=0.1, difficulty_ramping=True)
         self.action_space = gym.spaces.Discrete(self.game.num_actions())
-        self.observation_space = gym.spaces.Box(low=0, high=1, shape=self.game.state_shape(), dtype=np.float32)
+        shape = self.game.state_shape()
+        self.observation_space = gym.spaces.Box(low=0.0, high=1.0, shape=(shape[2], shape[0], shape[1]), dtype=np.float32)
 
     def step(self, action):
         reward, terminated = self.game.act(action)
-        return self.game.state().astype(np.float32), reward, terminated, False, {}
+        obs = np.transpose(self.game.state(), (2, 0, 1)).astype(np.float32)
+        return obs, reward, terminated, False, {}
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.game.reset()
-        return self.game.state().astype(np.float32), {}
+        obs = np.transpose(self.game.state(), (2, 0, 1)).astype(np.float32)
+        return obs, {}
 
 def get_colored_frame(state):
     """Converts a MinAtar 10x10xn binary state into a 100x100 RGB image."""
@@ -44,8 +47,8 @@ def get_colored_frame(state):
     return np.repeat(np.repeat(img, 10, axis=0), 10, axis=1)
 
 def main():
-    MODEL_NAME = "QRDQN_Stacked_1mil"
-    
+    MODEL_NAME = "QRDQN_tuned_1mil"
+
     # Load and save paths
     root_dir = Path(__file__).resolve().parents[2]
     model_load_path = root_dir / "models" / "qrdqn" / MODEL_NAME
@@ -57,7 +60,7 @@ def main():
         return MinAtarLocalEnv("space_invaders")
         
     env = DummyVecEnv([make_env])
-    env = VecFrameStack(env, n_stack=4)
+    env = VecFrameStack(env, n_stack=4, channels_order='first')
     
     print(f"Loading QRDQN model from: {model_load_path}...")
     try:
@@ -79,7 +82,7 @@ def main():
         done = dones[0] 
         score += rewards[0]
         
-        # Get the underlying 10x10 state for the frame
+        # Get underlying 10x10 state for the frame
         current_grid = env.venv.envs[0].game.state()
         frames.append(get_colored_frame(current_grid))
 
