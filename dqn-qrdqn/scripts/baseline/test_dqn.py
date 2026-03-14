@@ -39,7 +39,6 @@ def main():
 
     print(f"Loading model from: {MODEL_PATH}")
     try:
-        # SB3 load expects a string or path-like object
         model = DQN.load(str(MODEL_PATH))
     except Exception as e:
         print(f"Error: Model not found at {MODEL_PATH}.zip")
