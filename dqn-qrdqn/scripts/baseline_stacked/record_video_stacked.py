@@ -13,18 +13,21 @@ class MinAtarLocalEnv(gym.Env):
     def __init__(self, env_name="space_invaders"):
         self.game = Environment(env_name, sticky_action_prob=0.1, difficulty_ramping=True)
         self.action_space = spaces.Discrete(self.game.num_actions())
+        shape = self.game.state_shape()
         self.observation_space = spaces.Box(
-            low=0, high=1, shape=self.game.state_shape(), dtype=np.float32
+            low=0.0, high=1.0, shape=(shape[2], shape[0], shape[1]), dtype=np.float32
         )
 
     def step(self, action):
         reward, terminated = self.game.act(action)
-        return self.game.state().astype(np.float32), reward, terminated, False, {}
+        obs = np.transpose(self.game.state(), (2, 0, 1)).astype(np.float32)
+        return obs, reward, terminated, False, {}
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.game.reset()
-        return self.game.state().astype(np.float32), {}
+        obs = np.transpose(self.game.state(), (2, 0, 1)).astype(np.float32)
+        return obs, {}
 
 def get_colored_frame(state, scale=30):
     img = np.zeros((10, 10, 3), dtype=np.uint8)
@@ -37,11 +40,11 @@ def get_colored_frame(state, scale=30):
     return np.repeat(np.repeat(img, scale, axis=0), scale, axis=1)
 
 def main():
-    MODEL_NAME = "DQN_Stacked_100k"
+    MODEL_NAME = "DQN_Stacked_Tuned_1mil3"
 
     # Load and Save paths
     root_dir = Path(__file__).resolve().parents[2]
-    model_load_path = root_dir / "models" / "baseline_stacked" / MODEL_NAME
+    model_load_path = root_dir / "models" / "stacked" / MODEL_NAME
     video_save_dir = root_dir / "videos" / "baseline_stacked"
     
     # Ensure video directory exists
@@ -51,7 +54,7 @@ def main():
     env = DummyVecEnv([make_env])
     
     # Frame Stacking
-    env = VecFrameStack(env, n_stack=4)
+    env = VecFrameStack(env, n_stack=4, channels_order='first')
     
     print(f"Loading stacked model '{MODEL_NAME}' from {model_load_path}...")
     try:
