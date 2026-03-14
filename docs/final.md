@@ -179,6 +179,7 @@ Overall, the results highlight an important trade-off between learning stability
 
 - **PyTorch** — used to implement the PPO neural network, policy updates, and training pipeline.
 - **NumPy** — used for numerical operations during training and data processing.
+- -**Stable Baselines3 and Stable Baselines3 Contrib** - used their DQN and QRDQN algorithms.
 
 ### Environment and Benchmark
 
@@ -195,12 +196,14 @@ Overall, the results highlight an important trade-off between learning stability
 
 - Schulman et al., 2017 (PPO Paper) — main reference for implementing the clipped PPO objective.
 - Schulman et al., 2015 (GAE) — reference for implementing Generalized Advantage Estimation.
+- Young & Tian, 2019 (MinAtar paper) - reference for DQN starting hyperparameters.
 
 ### Online Documentation
 
 - PyTorch Documentation
 - MinAtar GitHub Repository
 - OpenAI Gym Documentation
+- Stable Baselines3 and Stable Baselines3 Contrib Documentation
 
 ### Data Visualization Tools
 
@@ -211,6 +214,7 @@ Overall, the results highlight an important trade-off between learning stability
 
 - ChatGPT (OpenAI) was used as a support tool for discussion and clarification of reinforcement learning concepts (e.g., PPO training dynamics and experiment design).
 - It was also used for minor editing and language polishing of written explanations in the report.
+- ChatGPT was used for coding assistance and debugging with the DQN and QRDQN implementation, testing, and recording.
 - AI tools were not used to generate the final PPO implementation, experimental code, or evaluation results.
 - All algorithm implementations, experiments, plots, and analysis were written and executed by the author.
 
@@ -228,12 +232,16 @@ Schwarzer, M., Obando-Ceron, J., Courville, A., Bellemare, M., Agarwal, R., & Ca
 
 [MinAtar Space Invaders - Pgx Documentation](https://www.sotets.uk/pgx/minatar_space_invaders/)
 
-MinAtar arXiv paper — [https://arxiv.org/pdf/1903.03176](https://arxiv.org/pdf/1903.03176)
+MinAtar Github Repository - [https://github.com/kenjyoung/MinAtar](https://github.com/kenjyoung/MinAtar)
 
-Stable-Baselines3 DQN documentation — [https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html](https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html)
+Stable-Baselines3 DQN Documentation — [https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html](https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html)
+
+Stable-Baselines3-contrib QRDQN Documentation— [https://sb3-contrib.readthedocs.io/en/master/modules/qrdqn.html](https://sb3-contrib.readthedocs.io/en/master/modules/qrdqn.html)
 
 QRDQN arXiv — [https://arxiv.org/pdf/1710.10044](https://arxiv.org/pdf/1710.10044)
 
 QRDQN explained — [https://www.emergentmind.com/topics/quantile-regression-deep-q-network-qr-dqn](https://www.emergentmind.com/topics/quantile-regression-deep-q-network-qr-dqn)
 
-QRDQN Stable-Baselines3-contrib — [https://sb3-contrib.readthedocs.io/en/master/modules/qrdqn.html](https://sb3-contrib.readthedocs.io/en/master/modules/qrdqn.html)
+Playing Atari with Deep Reinforcement Learning 2013 paper — [https://arxiv.org/abs/1312.5602](https://arxiv.org/abs/1312.5602)
+
+Human-level control through deep reinforcement learning 2015 paper — [https://www.nature.com/articles/nature14236](https://www.nature.com/articles/nature14236)
