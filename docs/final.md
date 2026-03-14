@@ -179,7 +179,7 @@ Overall, the results highlight an important trade-off between learning stability
 
 - **PyTorch** — used to implement the PPO neural network, policy updates, and training pipeline.
 - **NumPy** — used for numerical operations during training and data processing.
-- -**Stable Baselines3 and Stable Baselines3 Contrib** - used their DQN and QRDQN algorithms.
+- **Stable Baselines3 and Stable Baselines3 Contrib** - used their DQN and QRDQN algorithms.
 
 ### Environment and Benchmark
 
