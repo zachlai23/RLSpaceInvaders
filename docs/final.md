@@ -39,6 +39,18 @@ $$
 
 The QRDQN implementation used the same reward, action space and time step trials were used along with 4 frame temporal stacking. Again, we started evaluating no hyperparameters with and without temporal frame stacking. The same hyperparameter set as the DQN implementation was used to avoid changing too many variables, and to focus on comparing the algorithms themselves.
 
+### RainbowDQN
+
+Rainbow DQN is a model-free, value-based reinforcement learning algorithm that extends the base DQN by combining six improvements into a single agent: Double DQN, Dueling Networks, Prioritized Experience Replay, Multi-step Returns, Distributional RL (C51), and Noisy Networks. Rainbow is a popular method for training video game agents and performs well in environments with large state spaces. Rather than introducing a fundamentally new algorithm, Rainbow demonstrates that these six components are complementary and jointly produce significantly better performance than any individual enhancement alone.
+
+The core extension over standard DQN is the distributional approach to Q-learning, where instead of estimating a single expected Q-value per action, the network learns a full probability distribution over returns. Noisy Networks replace the standard ε-greedy exploration strategy with learnable parametric noise in the network weights, and the Dueling architecture separates the value and advantage streams to improve Q-value estimation. Double DQN reduces overestimation bias by using the online network to select actions and the target network to evaluate them.
+
+Loss function:
+
+$$\mathcal{L}(\theta) = -\frac{1}{B}\sum_{i=1}^{B} w_i \sum_z m(z) \log p_\theta(z \mid s_i, a_i)$$
+
+We applied Rainbow DQN to the MinAtar Space Invaders environment, training for 5,000,000 frames. The reward structure grants +1 for each enemy destroyed with no penalties, and the agent operates over a discrete action space of 6 moves corresponding to directional movement and shooting. Unlike standard DQN which uses a uniform replay buffer, Rainbow leverages a prioritized replay buffer of size 100,000 that samples transitions proportionally to their loss magnitude, controlled by a priority exponent of α = 0.5. This ensures the agent learns more frequently from surprising or high error experiences. Rather than bootstrapping from a single next step, 3-step returns are used to propagate reward signals further back through time, improving credit assignment. The important sampling exponent β is gradually annealed from 0.4 to 1.0 throughout training to correct for the sampling bias introduced by prioritization. The target network is synchronized with the online network via a hard update every 1,000 gradient steps, and all parameters are optimized using Adam with a learning rate of 1×10⁻⁴.
+
 ### PPO Approach
 
 For this project, we implemented the Proximal Policy Optimization (PPO) algorithm to train an agent in the MinAtar Space Invaders environment. We chose PPO because it is generally more stable and easier to tune than other policy gradient methods. The core of our approach relies on an Actor-Critic architecture that optimizes a "clipped" surrogate objective. This objective prevents the policy from changing too drastically in a single update, which helps keep the training stable.
