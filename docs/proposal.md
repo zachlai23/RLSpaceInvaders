@@ -3,6 +3,8 @@ layout: default
 title:  Proposal
 ---
 
+# Proposal
+
 ## Summary
 
 Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. Rather than treating this as a one-off application, our project uses Space Invaders as a **controlled testbed** for comparing and understanding reinforcement learning (RL) methods.

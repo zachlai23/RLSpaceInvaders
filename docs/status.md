@@ -3,6 +3,8 @@ layout: default
 title: Status
 ---
 
+# Status
+
 ## Summary
 
 Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. Rather than treating this as a one-off application, our project uses Space Invaders as a controlled testbed for comparing and understanding advanced reinforcement learning methods.
@@ -226,7 +228,7 @@ The primary constraint is computational cost. Rainbow DQN is significantly more 
 
 AI coding assistance was used for model setup, data report printing format, and debugging.
 
-## Part 3: Video Summary (35 points)
+## Video Summary
 
 <video controls width="100%">
   <source src="assets/status/RLSpaceInvaders%20Progress%20Report.mp4" type="video/mp4">

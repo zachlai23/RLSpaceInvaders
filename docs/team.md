@@ -3,6 +3,8 @@ layout: default
 title:  Team
 ---
 
+# Team
+
 ## Meet Our Team
 
 We are a team of dedicated students working on this reinforcement learning project.
