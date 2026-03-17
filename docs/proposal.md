@@ -3,7 +3,9 @@ layout: default
 title:  Proposal
 ---
 
-# Proposal
+# Project Proposal
+
+Last updated January 23rd, 2026
 
 ## Summary
 
