@@ -56,13 +56,14 @@ Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiat
 
 The [Final Report]({{ '/final.html' | relative_url }}) has just been published.
 
-- Added a full PPO approach section covering the clipped surrogate objective and Generalized Advantage Estimation (GAE).
-- Included PPO training dynamics analysis across four experimental configurations with quantitative results and hyperparameter tables.
-- Added a PPO component ablation study examining the effects of removing FrameStack, GAE, and learning-rate decay.
-- Included a final cross-algorithm performance comparison of PPO, DQN, QR-DQN, and Rainbow DQN in the MinAtar Space Invaders environment.
+- **DQN:** Finalized hyperparameter tuning with temporal frame stacking (k=4), pushing the tuned agent to an average score of 42.95 and 324 frames of survival at 1M timesteps — a major improvement over the untuned stacked baseline. Final average reward: 32.
+- **QR-DQN:** Distributional Q-learning paid off substantially, with QR-DQN reaching an average score of 76.5 and 588 survival frames at 1M steps, significantly outperforming DQN on both metrics. Final average reward: 50.
+- **Rainbow DQN:** Achieved the highest overall performance, scoring 106.0 on average at 1M frames and continuing to improve all the way to ~292.0 at 5M frames — the only algorithm that showed no plateau, thanks to its distributional and noisy-network components. Final average reward: 125.
+- **PPO:** Evaluated across four experimental configurations (Baseline Dual Decay, OpenAI Protocol, Genesis Reward Shaping, and Apex) plus a component ablation study isolating the roles of FrameStack, GAE, and learning-rate decay. Final average reward: 73.
+- Added a final cross-algorithm comparison of all four models, summarizing trade-offs in learning stability, sample efficiency, and peak reward.
 
 <video controls width="100%">
-  <source src="assets/status/RLSpaceInvaders%20Progress%20Report.mp4" type="video/mp4">
+  <source src="assets/final/RLSpaceInvaders%20Final%20Report.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
