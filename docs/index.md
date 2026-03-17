@@ -5,6 +5,8 @@ statusClass: disabled
 finalClass: disabled
 ---
 
+# Welcome to the RLSpaceInvaders project!
+
 <img
   src="{{ '/assets/hero-ai-invaders.svg' | relative_url }}"
   class="img-fluid rounded mb-3"
@@ -12,7 +14,7 @@ finalClass: disabled
   loading="lazy"
 />
 
-Welcome to the RLSpaceInvaders project! This is a reinforcement learning initiative to train autonomous agents to play Space Invaders using advanced machine learning algorithms.
+This is a reinforcement learning initiative to train autonomous agents to play Space Invaders using advanced machine learning algorithms.
 
 ## Quick Links
 

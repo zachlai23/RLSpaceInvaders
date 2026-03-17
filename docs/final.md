@@ -5,6 +5,13 @@ title: Final
 
 # Final Report
 
+## Video Summary
+
+<video controls width="100%">
+  <source src="assets/final/RLSpaceInvaders%20Final%20Report.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Summary
 
 Space Invaders is a classic fixed-shooter game where the player controls a starfighter, attacking and dodging enemies from above. Rather than treating this as a one-off application, our project uses Space Invaders as a controlled testbed for comparing and understanding reinforcement learning (RL) methods.
@@ -281,11 +288,3 @@ Playing Atari with Deep Reinforcement Learning 2013 paper — [https://arxiv.org
 
 Human-level control through deep reinforcement learning 2015 paper — [https://www.nature.com/articles/nature14236](https://www.nature.com/articles/nature14236)
 
----
-
-## Video Summary
-
-<video controls width="100%">
-  <source src="assets/final/RLSpaceInvaders%20Final%20Report.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
